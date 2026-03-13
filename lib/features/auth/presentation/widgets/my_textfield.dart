@@ -37,11 +37,13 @@ class MyTextField extends StatelessWidget {
           hintStyle: TextStyle(
             fontSize: 15,
             color: theme.inputDecorationTheme.hintStyle!.color!,
+            fontWeight: FontWeight.w500,
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(5),
           ),
+          hoverColor: Colors.black12,
         ),
         validator: validator,
       ),
