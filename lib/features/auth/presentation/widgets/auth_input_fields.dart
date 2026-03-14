@@ -1,4 +1,4 @@
-import 'package:chat_app/features/auth/presentation/widgets/my_textfield.dart';
+import 'package:chat_app/core/widgets/my_textfield.dart';
 import 'package:flutter/material.dart';
 
 class AuthInputFields extends StatelessWidget {
