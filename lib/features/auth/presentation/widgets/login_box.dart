@@ -11,7 +11,7 @@ class LoginBox extends StatelessWidget {
     super.key,
     required this.emailController,
     required this.pwController,
-    required this.onTap
+    required this.onTap,
   });
 
   @override
