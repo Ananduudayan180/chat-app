@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+  final VoidCallback toggle;
+  LoginPage({super.key, required this.toggle});
 
   final emailController = TextEditingController();
   final pwController = TextEditingController();
@@ -56,15 +57,14 @@ class LoginPage extends StatelessWidget {
                     emailController: emailController,
                     pwController: pwController,
                     //Login button tap
-                    onTap: () {
-                      //login request
-                      context.read<AuthBloc>().add(
-                        LoginRequested(
-                          email: emailController.text,
-                          pw: pwController.text,
-                        ),
-                      );
-                    },
+                    onTap: () => context.read<AuthBloc>().add(
+                      LoginRequested(
+                        email: emailController.text,
+                        pw: pwController.text,
+                      ),
+                    ),
+                    //login or register
+                    toggle: toggle,
                   ),
                 ],
               ),

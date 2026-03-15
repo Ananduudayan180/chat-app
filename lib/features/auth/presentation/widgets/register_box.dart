@@ -7,12 +7,14 @@ class RegisterBox extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController pwController;
   final VoidCallback onTap;
+  final VoidCallback toggle;
   const RegisterBox({
     super.key,
     required this.nameController,
     required this.emailController,
     required this.pwController,
     required this.onTap,
+    required this.toggle,
   });
 
   @override
@@ -60,7 +62,7 @@ class RegisterBox extends StatelessWidget {
               SizedBox(width: 4),
               //Navigate -> Login
               GestureDetector(
-                onTap: () {},
+                onTap: toggle,
                 child: Text(
                   'Log in here',
                   style: TextStyle(color: theme.colorScheme.primary),
