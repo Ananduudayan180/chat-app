@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class LoginBox extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController pwController;
+  final VoidCallback onTap;
 
   const LoginBox({
     super.key,
     required this.emailController,
     required this.pwController,
+    required this.onTap
   });
 
   @override
@@ -46,7 +48,7 @@ class LoginBox extends StatelessWidget {
               SizedBox(width: 4),
               //Navigate -> Register
               GestureDetector(
-                onTap: () {},
+                onTap: onTap,
                 child: Text(
                   "Sign up",
                   style: TextStyle(color: theme.colorScheme.primary),

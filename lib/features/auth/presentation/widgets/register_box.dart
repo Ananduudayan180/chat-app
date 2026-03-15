@@ -6,11 +6,13 @@ class RegisterBox extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController emailController;
   final TextEditingController pwController;
+  final VoidCallback onTap;
   const RegisterBox({
     super.key,
     required this.nameController,
     required this.emailController,
     required this.pwController,
+    required this.onTap,
   });
 
   @override
@@ -45,7 +47,7 @@ class RegisterBox extends StatelessWidget {
             nameController: nameController,
           ),
           //Login button
-          MyButton(buttonName: 'Sign up', onTap: () {}),
+          MyButton(buttonName: 'Sign up', onTap: onTap),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
