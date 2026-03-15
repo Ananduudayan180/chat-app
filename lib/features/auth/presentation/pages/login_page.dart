@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme theme = Theme.of(context).colorScheme;
     return Scaffold(
-      body: BlocConsumer(
+      body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           //Error
           if (state is AuthError) {

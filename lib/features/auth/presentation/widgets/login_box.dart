@@ -35,7 +35,7 @@ class LoginBox extends StatelessWidget {
             passController: pwController,
           ),
           //Login button
-          MyButton(buttonName: 'Log in', onTap: () {}),
+          MyButton(buttonName: 'Log in', onTap: onTap),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
