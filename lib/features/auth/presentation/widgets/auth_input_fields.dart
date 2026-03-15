@@ -1,4 +1,5 @@
 import 'package:chat_app/core/widgets/my_textfield.dart';
+import 'package:chat_app/features/auth/presentation/utils/form_validator.dart';
 import 'package:flutter/material.dart';
 
 class AuthInputFields extends StatelessWidget {
@@ -26,7 +27,7 @@ class AuthInputFields extends StatelessWidget {
                 ? MyTextField(
                     controller: nameController!,
                     hintText: 'Name',
-                    validator: null,
+                    validator: FormValidator.name,
                   )
                 : SizedBox(),
 
@@ -35,7 +36,7 @@ class AuthInputFields extends StatelessWidget {
             MyTextField(
               controller: emailController,
               hintText: 'Example@gmail.com',
-              validator: null,
+              validator: FormValidator.email,
             ),
 
             Row(children: [Text("Password")]),
@@ -44,7 +45,7 @@ class AuthInputFields extends StatelessWidget {
               controller: passController,
               hintText: 'Password',
               obscureText: true,
-              validator: null,
+              validator: FormValidator.pass,
             ),
           ],
         ),

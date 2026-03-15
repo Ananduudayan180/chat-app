@@ -7,6 +7,7 @@ class LoginBox extends StatelessWidget {
   final TextEditingController pwController;
   final VoidCallback onTap;
   final VoidCallback toggle;
+  final GlobalKey<FormState> formKey;
 
   const LoginBox({
     super.key,
@@ -14,6 +15,7 @@ class LoginBox extends StatelessWidget {
     required this.pwController,
     required this.onTap,
     required this.toggle,
+    required this.formKey,
   });
 
   @override
@@ -31,10 +33,13 @@ class LoginBox extends StatelessWidget {
             style: TextStyle(color: theme.colorScheme.primary),
           ),
           SizedBox(height: 40),
-          //Textfields
-          AuthInputFields(
-            emailController: emailController,
-            passController: pwController,
+          Form(
+            key: formKey,
+            //Textfields
+            child: AuthInputFields(
+              emailController: emailController,
+              passController: pwController,
+            ),
           ),
           //Login button
           MyButton(buttonName: 'Log in', onTap: onTap),

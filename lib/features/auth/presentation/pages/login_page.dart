@@ -10,6 +10,7 @@ class LoginPage extends StatelessWidget {
 
   final emailController = TextEditingController();
   final pwController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +58,20 @@ class LoginPage extends StatelessWidget {
                     emailController: emailController,
                     pwController: pwController,
                     //Login button tap
-                    onTap: () => context.read<AuthBloc>().add(
-                      LoginRequested(
-                        email: emailController.text,
-                        pw: pwController.text,
-                      ),
-                    ),
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<AuthBloc>().add(
+                          LoginRequested(
+                            email: emailController.text,
+                            pw: pwController.text,
+                          ),
+                        );
+                      }
+                    },
                     //login or register
                     toggle: toggle,
+                    //form validation
+                    formKey: formKey,
                   ),
                 ],
               ),

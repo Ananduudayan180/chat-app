@@ -11,6 +11,7 @@ class RegisterPage extends StatelessWidget {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final pwController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +60,21 @@ class RegisterPage extends StatelessWidget {
                     emailController: emailController,
                     pwController: pwController,
                     //register button tap
-                    onTap: () => context.read<AuthBloc>().add(
-                      RegisterRequested(
-                        name: nameController.text,
-                        email: emailController.text,
-                        pw: pwController.text,
-                      ),
-                    ),
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<AuthBloc>().add(
+                          RegisterRequested(
+                            name: nameController.text,
+                            email: emailController.text,
+                            pw: pwController.text,
+                          ),
+                        );
+                      }
+                    },
                     //login or register
                     toggle: toggle,
+                    //form validation
+                    formKey: formKey,
                   ),
                 ],
               ),

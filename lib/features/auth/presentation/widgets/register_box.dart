@@ -8,6 +8,7 @@ class RegisterBox extends StatelessWidget {
   final TextEditingController pwController;
   final VoidCallback onTap;
   final VoidCallback toggle;
+  final GlobalKey<FormState> formKey;
   const RegisterBox({
     super.key,
     required this.nameController,
@@ -15,6 +16,7 @@ class RegisterBox extends StatelessWidget {
     required this.pwController,
     required this.onTap,
     required this.toggle,
+    required this.formKey,
   });
 
   @override
@@ -42,11 +44,14 @@ class RegisterBox extends StatelessWidget {
             style: TextStyle(color: theme.colorScheme.primary),
           ),
           SizedBox(height: 40),
-          //Textfields
-          AuthInputFields(
-            emailController: emailController,
-            passController: pwController,
-            nameController: nameController,
+          Form(
+            key: formKey,
+            //Textfields
+            child: AuthInputFields(
+              emailController: emailController,
+              passController: pwController,
+              nameController: nameController,
+            ),
           ),
           //Login button
           MyButton(buttonName: 'Sign up', onTap: onTap),
