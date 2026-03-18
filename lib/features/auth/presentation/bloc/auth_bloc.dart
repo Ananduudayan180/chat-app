@@ -9,6 +9,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required AuthRepo authRepo})
     : _authRepo = authRepo,
       super(AuthInitial()) {
+    //check auth status
+    on<CheckAuthStatus>((event, emit) {
+      final user = _authRepo.checkAuthStatus();
+      if (user != null) {
+        emit(Authenticated());
+      } else {
+        emit(Unauthenticated());
+      }
+    });
+
     //Login
     on<LoginRequested>((event, emit) async {
       emit(AuthLoading());
@@ -52,6 +62,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         await _authRepo.logoutUser();
+        emit(Unauthenticated());
       } on FirebaseAuthException catch (e) {
         emit(AuthError(errorMsg: e.message ?? 'Logout failed'));
       } catch (e) {

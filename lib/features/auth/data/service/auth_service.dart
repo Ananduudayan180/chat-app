@@ -62,4 +62,7 @@ class AuthService {
 
   //get current user uid
   String get currentUserUid => _auth.currentUser!.uid;
+
+  //check auth status
+  User? checkAuthStatus() => _auth.currentUser;
 }

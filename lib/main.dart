@@ -3,7 +3,7 @@ import 'package:chat_app/core/theme/light_mode.dart';
 import 'package:chat_app/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:chat_app/features/auth/presentation/pages/register_page.dart';
+import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +14,8 @@ void main() async {
   runApp(
     BlocProvider<AuthBloc>(
       create: (context) =>
-          AuthBloc(authRepo: AuthRepoImpl(authService: AuthService())),
+          AuthBloc(authRepo: AuthRepoImpl(authService: AuthService()))
+            ..add(CheckAuthStatus()),
       child: const MyApp(),
     ),
   );
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightMode,
-      home: RegisterPage(),
+      home: AuthSwitcher(),
     );
   }
 }
