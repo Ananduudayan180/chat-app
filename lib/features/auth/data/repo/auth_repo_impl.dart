@@ -1,6 +1,7 @@
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/auth/domain/entity/user_model.dart';
 import 'package:chat_app/features/auth/domain/repo/auth_repo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final AuthService _authService;
@@ -16,4 +17,7 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<void> logoutUser() => _authService.logoutUser();
+
+  @override
+  User? checkAuthStatus() => _authService.checkAuthStatus();
 }
