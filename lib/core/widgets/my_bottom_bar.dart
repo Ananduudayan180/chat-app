@@ -1,14 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-class MyBottomBar extends StatefulWidget {
-  const MyBottomBar({super.key});
+class MyBottomBar extends StatelessWidget {
+  final void Function(int index)? onTap;
+  const MyBottomBar({super.key, required this.onTap});
 
-  @override
-  State<MyBottomBar> createState() => _MyBottomBarState();
-}
-
-class _MyBottomBarState extends State<MyBottomBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -36,6 +32,7 @@ class _MyBottomBarState extends State<MyBottomBar> {
           child: Icon(Icons.group_rounded, size: 26),
         ),
       ],
+      onTap: onTap,
     );
   }
 }
