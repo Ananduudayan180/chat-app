@@ -1,6 +1,6 @@
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/auth/presentation/widgets/register_box.dart';
-import 'package:chat_app/features/chat/presentation/pages/chat_home_page.dart';
+import 'package:chat_app/app/home_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +33,7 @@ class RegisterPage extends StatelessWidget {
           }
           //loaded
           if (state is Authenticated) {
-            return ChatHomePage();
+            return HomeRoute();
           }
           //authInitial and unauthenticated
           return Stack(
