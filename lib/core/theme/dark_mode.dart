@@ -15,4 +15,5 @@ ThemeData darkMode = ThemeData(
     backgroundColor: Color(0xFF2C2C2C),
     contentTextStyle: GoogleFonts.poppins(color: Color(0xFFFFFFFF)),
   ),
+  dividerColor: Colors.white54,
 );

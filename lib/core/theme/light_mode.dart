@@ -15,4 +15,5 @@ ThemeData lightMode = ThemeData(
     backgroundColor: Color(0xFFE0E0E0),
     contentTextStyle: GoogleFonts.poppins(color: Color(0xFF000000)),
   ),
+  dividerColor: Colors.black38,
 );
