@@ -4,6 +4,9 @@ import 'package:chat_app/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
+import 'package:chat_app/features/profile/data/repo/profile_repo_impl.dart';
+import 'package:chat_app/features/profile/data/service/profile_service.dart';
+import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,10 +15,22 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    BlocProvider<AuthBloc>(
-      create: (context) =>
-          AuthBloc(authRepo: AuthRepoImpl(authService: AuthService()))
-            ..add(CheckAuthStatus()),
+    MultiBlocProvider(
+      providers: [
+        //Auth Bloc
+        BlocProvider<AuthBloc>(
+          create: (context) =>
+              AuthBloc(authRepo: AuthRepoImpl(authService: AuthService()))
+                ..add(CheckAuthStatus()),
+          child: const MyApp(),
+        ),
+        //Profile Bloc
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(
+            profileRepo: ProfileRepoImpl(profileService: ProfileService()),
+          ),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
