@@ -1,8 +1,10 @@
 import 'package:chat_app/features/auth/domain/entity/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   //login
   Future<UserModel?> loginUser(String email, String pw) async {
@@ -36,11 +38,19 @@ class AuthService {
 
       if (userData.user == null) return null;
 
-      return UserModel(
+      final userModel = UserModel(
         uid: userData.user!.uid,
         name: name,
         email: userData.user!.email!,
       );
+
+      //save user profile in firestore
+      _firestore
+          .collection('user_profiles')
+          .doc(userData.user!.uid)
+          .set(userModel.toJson());
+
+      return userModel;
     } on FirebaseAuthException {
       rethrow;
     } catch (_) {
