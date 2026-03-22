@@ -23,8 +23,8 @@ class ProfileService {
         );
       }
       return null;
-    } on FirebaseException catch (_) {
-      rethrow;
+    } on Exception catch (e) {
+      throw Exception('Failed to fetch user profile $e');
     }
   }
 }
