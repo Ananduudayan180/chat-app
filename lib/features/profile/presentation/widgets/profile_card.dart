@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,13 +47,20 @@ class ProfileCard extends StatelessWidget {
                   //big container border
                   border: Border.all(width: 2, color: theme.dividerColor),
                 ),
+                //circle avatar
                 child: CircleAvatar(
                   radius: 70,
                   backgroundColor: Colors.transparent,
-                  child: Icon(
-                    Icons.person,
-                    size: 90,
-                    color: theme.dividerColor,
+                  //profile image
+                  child: CachedNetworkImage(
+                    imageUrl: profile.profilePic,
+                    placeholder: (context, url) =>
+                        Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.person, size: 90, color: theme.dividerColor),
+                    fit: BoxFit.cover,
+                    // width: 140,
+                    // height: 140,
                   ),
                 ),
               ),
