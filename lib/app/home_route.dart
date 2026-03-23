@@ -31,7 +31,7 @@ class _HomeRouteState extends State<HomeRoute> {
     return Scaffold(
       //my bottom bar
       bottomNavigationBar: MyBottomBar(onTap: switchPages),
-      body: pages[currentIndex],
+      body: IndexedStack(index: currentIndex, children: pages),
     );
   }
 }
