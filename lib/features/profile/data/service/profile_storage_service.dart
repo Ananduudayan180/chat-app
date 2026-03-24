@@ -12,9 +12,9 @@ class ProfileStorageService {
   }) async {
     try {
       if (path != null) {
-        return await uploadImagePath(fileName, path, 'profile_images');
+        return await _uploadImagePath(fileName, path, 'profile_images');
       } else if (bytes != null) {
-        return await uploadImageBytes(fileName, bytes, 'profile_images');
+        return await _uploadImageBytes(fileName, bytes, 'profile_images');
       } else {
         throw Exception('No image data');
       }
@@ -25,7 +25,7 @@ class ProfileStorageService {
 
   //HELPER FUNCTIONS
   //mobile - desktop upload
-  Future<String> uploadImagePath(
+  Future<String> _uploadImagePath(
     String fileName,
     String path,
     String bucketId,
@@ -39,7 +39,7 @@ class ProfileStorageService {
   }
 
   //web upload
-  Future<String> uploadImageBytes(
+  Future<String> _uploadImageBytes(
     String fileName,
     Uint8List bytes,
     String bucketId,
