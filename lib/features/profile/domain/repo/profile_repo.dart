@@ -8,4 +8,5 @@ abstract class ProfileRepo {
     String? path,
     required String fileName,
   });
+  Future<void> updateProfileImage(String url, String uid);
 }

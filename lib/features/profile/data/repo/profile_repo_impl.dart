@@ -30,4 +30,9 @@ class ProfileRepoImpl implements ProfileRepo {
     bytes: bytes,
     path: path,
   );
+
+  //update profile image
+  @override
+  Future<void> updateProfileImage(String url, String uid) =>
+      _profileService.updateProfileImage(url, uid);
 }
