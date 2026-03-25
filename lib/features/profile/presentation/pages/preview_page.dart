@@ -57,11 +57,14 @@ class PreviewPage extends StatelessWidget {
       ),
       //body
       body: Center(
-        child: bytes != null
-            ? Image.memory(bytes!, fit: BoxFit.contain)
-            : path != null
-            ? Image.file(File(path!))
-            : Text('No image selected'),
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: bytes != null
+              ? Image.memory(bytes!, fit: BoxFit.cover)
+              : path != null
+              ? Image.file(File(path!), fit: BoxFit.cover)
+              : Text('No image selected'),
+        ),
       ),
     );
   }
