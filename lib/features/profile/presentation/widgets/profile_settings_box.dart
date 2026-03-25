@@ -1,6 +1,8 @@
+import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileSettingsBox extends StatelessWidget {
   const ProfileSettingsBox({super.key});
@@ -52,7 +54,7 @@ class ProfileSettingsBox extends StatelessWidget {
               titleColor: Colors.red,
               leadingColor: Colors.red,
               trailingColor: Colors.red,
-              onTap: () {},
+              onTap: () => context.read<AuthBloc>().add(LogoutRequested()),
             ),
           ],
         ),
