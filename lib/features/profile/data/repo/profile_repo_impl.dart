@@ -1,23 +1,23 @@
 import 'dart:typed_data';
-import 'package:chat_app/features/profile/data/service/profile_service.dart';
+import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
 import 'package:chat_app/features/profile/data/service/profile_storage_service.dart';
 import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
 import 'package:chat_app/features/profile/domain/repo/profile_repo.dart';
 
 class ProfileRepoImpl implements ProfileRepo {
-  final ProfileService _profileService;
+  final ProfileFirestoreService _firestoreService;
   final ProfileStorageService _storageService;
 
   ProfileRepoImpl({
-    required ProfileService profileService,
+    required ProfileFirestoreService firestoreService,
     required ProfileStorageService storageService,
   }) : _storageService = storageService,
-       _profileService = profileService;
+       _firestoreService = firestoreService;
 
   //fetch user profile
   @override
   Future<ProfileModel?> fetchUserProfile(String uid) =>
-      _profileService.fetchUserProfile(uid);
+      _firestoreService.fetchUserProfile(uid);
 
   //upload profile image
   @override
@@ -34,5 +34,5 @@ class ProfileRepoImpl implements ProfileRepo {
   //update profile image
   @override
   Future<void> updateProfileImage(String url, String uid) =>
-      _profileService.updateProfileImage(url, uid);
+      _firestoreService.updateProfileImage(url, uid);
 }

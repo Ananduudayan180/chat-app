@@ -5,7 +5,7 @@ import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
 import 'package:chat_app/features/profile/data/repo/profile_repo_impl.dart';
-import 'package:chat_app/features/profile/data/service/profile_service.dart';
+import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
 import 'package:chat_app/features/profile/data/service/profile_storage_service.dart';
 import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +37,7 @@ void main() async {
         BlocProvider<ProfileBloc>(
           create: (context) => ProfileBloc(
             profileRepo: ProfileRepoImpl(
-              profileService: ProfileService(),
+              firestoreService: ProfileFirestoreService(),
               storageService: ProfileStorageService(),
             ),
           ),
