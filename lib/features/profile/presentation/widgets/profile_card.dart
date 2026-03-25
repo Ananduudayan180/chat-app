@@ -52,15 +52,20 @@ class ProfileCard extends StatelessWidget {
                   radius: 70,
                   backgroundColor: Colors.transparent,
                   //profile image
-                  child: CachedNetworkImage(
-                    imageUrl: profile.profilePic,
-                    placeholder: (context, url) =>
-                        Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.person, size: 90, color: theme.dividerColor),
-                    fit: BoxFit.cover,
-                    // width: 140,
-                    // height: 140,
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: profile.profilePic,
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.person,
+                        size: 90,
+                        color: theme.dividerColor,
+                      ),
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
                   ),
                 ),
               ),
