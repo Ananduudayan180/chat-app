@@ -1,11 +1,21 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PreviewPage extends StatelessWidget {
   final Uint8List? bytes;
   final String? path;
-  const PreviewPage({super.key, this.bytes, this.path});
+  final String uid;
+  final String fileName;
+  const PreviewPage({
+    super.key,
+    this.bytes,
+    this.path,
+    required this.uid,
+    required this.fileName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +33,19 @@ class PreviewPage extends StatelessWidget {
         actions: [
           //Select button
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              //upload profile image
+              context.read<ProfileBloc>().add(
+                UploadProfileImage(
+                  bytes: bytes,
+                  path: path,
+                  fileName: fileName,
+                  uid: uid,
+                ),
+              );
+              // pop
+              Navigator.pop(context);
+            },
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
