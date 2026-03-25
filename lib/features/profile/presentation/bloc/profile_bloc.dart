@@ -11,7 +11,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     : _profileRepo = profileRepo,
       super(ProfileInitial()) {
     //fetch user profile
-    on<FetchProfileRequested>((event, emit) async {
+    on<FetchUserProfile>((event, emit) async {
       emit(ProfileLoading());
       try {
         final profileModel = await _profileRepo.fetchUserProfile(event.uid);

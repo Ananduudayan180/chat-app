@@ -60,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     final uid = _auth.currentUserUid;
-    context.read<ProfileBloc>().add(FetchProfileRequested(uid: uid));
+    context.read<ProfileBloc>().add(FetchUserProfile(uid: uid));
   }
 
   @override

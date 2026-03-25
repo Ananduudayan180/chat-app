@@ -2,10 +2,10 @@ part of 'profile_bloc.dart';
 
 sealed class ProfileEvent {}
 
-final class FetchProfileRequested extends ProfileEvent {
+final class FetchUserProfile extends ProfileEvent {
   final String uid;
 
-  FetchProfileRequested({required this.uid});
+  FetchUserProfile({required this.uid});
 }
 
 final class UploadProfileImage extends ProfileEvent {
