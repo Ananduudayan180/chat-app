@@ -20,7 +20,7 @@ class ProfileFirestoreService {
           uid: user['uid'],
           name: user['name'],
           email: user['email'],
-          profilePic: user['profileImageUrl'] ?? '',
+          profileImageUrl: user['profileImageUrl'] ?? '',
         );
       }
       return null;

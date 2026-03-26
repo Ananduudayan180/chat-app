@@ -54,7 +54,7 @@ class ProfileCard extends StatelessWidget {
                   //profile image
                   child: ClipOval(
                     child: CachedNetworkImage(
-                      imageUrl: profile.profilePic,
+                      imageUrl: profile.profileImageUrl,
                       placeholder: (context, url) =>
                           Center(child: CircularProgressIndicator()),
                       errorWidget: (context, url, error) => Icon(
