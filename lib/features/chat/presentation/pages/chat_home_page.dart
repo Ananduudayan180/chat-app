@@ -2,12 +2,13 @@ import 'package:chat_app/core/widgets/my_textfield.dart';
 import 'package:chat_app/features/chat/presentation/widgets/chat_list.dart';
 import 'package:flutter/material.dart';
 
-class ChatListPage extends StatelessWidget {
-  const ChatListPage({super.key});
+class ChatHomePage extends StatelessWidget {
+  ChatHomePage({super.key});
+
+  final searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final searchController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(

@@ -1,5 +1,5 @@
 import 'package:chat_app/core/widgets/my_bottom_bar.dart';
-import 'package:chat_app/features/chat/presentation/pages/chat_list_page.dart';
+import 'package:chat_app/features/chat/presentation/pages/chat_home_page.dart';
 import 'package:chat_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:chat_app/features/settings/presentation/pages/settings_page.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ int currentIndex = 0;
 
 class _HomeRouteState extends State<HomeRoute> {
   final List<Widget> pages = [
-    const ChatListPage(),
+    ChatHomePage(),
     const SettingsPage(),
     const ProfilePage(),
   ];
