@@ -1,5 +1,7 @@
 import 'package:chat_app/core/widgets/my_textfield.dart';
+import 'package:chat_app/features/chat/presentation/pages/users_page.dart';
 import 'package:chat_app/features/chat/presentation/widgets/chat_list.dart';
+import 'package:chat_app/features/chat/presentation/widgets/my_fab_button.dart';
 import 'package:flutter/material.dart';
 
 class ChatHomePage extends StatelessWidget {
@@ -34,7 +36,24 @@ class ChatHomePage extends StatelessWidget {
             ),
           ),
           //chat list
-          ChatList(),
+          Expanded(
+            child: Stack(
+              children: [
+                //chat list
+                ChatList(),
+                //FAB
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: MyFabButton(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => UsersPage()),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
