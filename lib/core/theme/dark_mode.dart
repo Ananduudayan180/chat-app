@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData darkMode = ThemeData(
   textTheme: GoogleFonts.poppinsTextTheme().apply(bodyColor: Colors.white),
   scaffoldBackgroundColor: const Color(0xFF1A1A1A),
+   iconTheme: IconThemeData(color: Colors.white),
   colorScheme: const ColorScheme.dark(
     primary: Color(0xFFFF7700),
     surface: Colors.white10,
