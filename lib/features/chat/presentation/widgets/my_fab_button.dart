@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyFabButton extends StatelessWidget {
-  const MyFabButton({super.key});
+  final VoidCallback onPressed;
+  const MyFabButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child: Container(
         width: double.infinity,
         height: double.infinity,
