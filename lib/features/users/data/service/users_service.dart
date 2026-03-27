@@ -1,11 +1,11 @@
-import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
+import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UsersService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   //fetch all app users
-  Future<List<ProfileModel>> fetchUsers() async {
+  Future<List<AppUserModel>> fetchUsers() async {
     try {
       final usersCollection = await _firestore.collection('users').get();
 
@@ -13,10 +13,9 @@ class UsersService {
 
       return usersDocs.map((doc) {
         final user = doc.data();
-        return ProfileModel(
+        return AppUserModel(
           uid: user['id'],
           name: user['name'],
-          email: user['email'],
           profileImageUrl: user['profileImageUrl'],
         );
       }).toList();

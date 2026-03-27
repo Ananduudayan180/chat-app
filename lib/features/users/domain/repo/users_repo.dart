@@ -1,5 +1,5 @@
-import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
+import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 
 abstract class UsersRepo {
-  Future<List<ProfileModel>> fetchUsers();
+  Future<List<AppUserModel>> fetchUsers();
 }

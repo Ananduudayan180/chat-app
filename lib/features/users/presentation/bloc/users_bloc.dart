@@ -1,4 +1,4 @@
-import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
+import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 import 'package:chat_app/features/users/domain/repo/users_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

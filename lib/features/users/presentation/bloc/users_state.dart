@@ -8,7 +8,7 @@ final class UsersInitial extends UsersState {}
 final class UsersLoading extends UsersState {}
 
 final class UsersLoaded extends UsersState {
-  final List<ProfileModel> users;
+  final List<AppUserModel> users;
 
   UsersLoaded({required this.users});
 }
