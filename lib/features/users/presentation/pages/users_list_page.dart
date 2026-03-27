@@ -1,8 +1,7 @@
-import 'package:chat_app/features/chat/presentation/widgets/chat_list.dart';
 import 'package:flutter/material.dart';
 
-class UsersPage extends StatelessWidget {
-  const UsersPage({super.key});
+class UsersListPage extends StatelessWidget {
+  const UsersListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,6 @@ class UsersPage extends StatelessWidget {
         ),
         title: Text('Message'),
       ),
-      body: ChatList(),
     );
   }
 }
