@@ -7,10 +7,7 @@ class ProfileFirestoreService {
   //fetch user profile
   Future<ProfileModel?> fetchUserProfile(String uid) async {
     try {
-      final userData = await _firestore
-          .collection('user_profiles')
-          .doc(uid)
-          .get();
+      final userData = await _firestore.collection('users').doc(uid).get();
 
       if (userData.exists) {
         final user = userData.data();
@@ -32,7 +29,7 @@ class ProfileFirestoreService {
   //update profile image
   Future<void> updateProfileImage(String url, String uid) async {
     try {
-      await _firestore.collection('user_profiles').doc(uid).set({
+      await _firestore.collection('users').doc(uid).set({
         'profileImageUrl': url,
       }, SetOptions(merge: true));
     } on Exception {

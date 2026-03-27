@@ -44,9 +44,9 @@ class AuthService {
         email: userData.user!.email!,
       );
 
-      //save user profile in firestore
+      //save app users in firestore
       _firestore
-          .collection('user_profiles')
+          .collection('users')
           .doc(userData.user!.uid)
           .set(userModel.toJson());
 
