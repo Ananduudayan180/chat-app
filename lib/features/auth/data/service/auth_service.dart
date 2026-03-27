@@ -1,4 +1,4 @@
-import 'package:chat_app/features/auth/domain/entity/user_model.dart';
+import 'package:chat_app/features/auth/domain/entity/auth_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -7,7 +7,7 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   //login
-  Future<UserModel?> loginUser(String email, String pw) async {
+  Future<AuthModel?> loginUser(String email, String pw) async {
     try {
       UserCredential userData = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -16,7 +16,7 @@ class AuthService {
 
       if (userData.user == null) return null;
 
-      return UserModel(
+      return AuthModel(
         uid: userData.user!.uid,
         name: '',
         email: userData.user!.email!,
@@ -29,7 +29,7 @@ class AuthService {
   }
 
   //register
-  Future<UserModel?> registerUser(String name, String email, String pw) async {
+  Future<AuthModel?> registerUser(String name, String email, String pw) async {
     try {
       UserCredential userData = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -38,7 +38,7 @@ class AuthService {
 
       if (userData.user == null) return null;
 
-      final userModel = UserModel(
+      final userModel = AuthModel(
         uid: userData.user!.uid,
         name: name,
         email: userData.user!.email!,

@@ -1,6 +1,6 @@
-import 'package:chat_app/features/auth/domain/entity/user_model.dart';
+import 'package:chat_app/features/auth/domain/entity/auth_model.dart';
 
-class ProfileModel extends UserModel {
+class ProfileModel extends AuthModel {
   final String profileImageUrl;
 
   ProfileModel({

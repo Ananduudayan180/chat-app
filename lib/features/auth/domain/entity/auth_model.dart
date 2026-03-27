@@ -1,9 +1,9 @@
-class UserModel {
+class AuthModel {
   final String uid;
   final String name;
   final String email;
 
-  UserModel({required this.uid, required this.name, required this.email});
+  AuthModel({required this.uid, required this.name, required this.email});
 
   Map<String, dynamic> toJson() {
     return {'uid': uid, 'name': name, 'email': email};
