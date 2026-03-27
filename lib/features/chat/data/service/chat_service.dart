@@ -4,12 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-//fetch all app users
+  //fetch all app users
   Future<List<ProfileModel>> fetchAllUsers() async {
     try {
-      final usersCollection = await _firestore
-          .collection('user_profiles')
-          .get();
+      final usersCollection = await _firestore.collection('users').get();
 
       final usersDocs = usersCollection.docs;
 
