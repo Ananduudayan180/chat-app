@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chat_app/core/widgets/common_profile_avatar.dart';
 import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,40 +34,10 @@ class ProfileCard extends StatelessWidget {
             //BIG CONTAINER - view profile pic
             GestureDetector(
               onTap: viewPic,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: theme.colorScheme.surface,
-                  gradient: LinearGradient(
-                    colors: [
-                      theme.colorScheme.surface,
-                      theme.colorScheme.surface,
-                    ],
-                  ),
-                  //big container border
-                  border: Border.all(width: 2, color: theme.dividerColor),
-                ),
-                //circle avatar
-                child: CircleAvatar(
-                  radius: 70,
-                  backgroundColor: Colors.transparent,
-                  //profile image
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: profile.profileImageUrl,
-                      placeholder: (context, url) =>
-                          Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => Icon(
-                        Icons.person,
-                        size: 90,
-                        color: theme.dividerColor,
-                      ),
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  ),
-                ),
+              child: CommonProfileAvatar(
+                profileImageUrl: profile.profileImageUrl,
+                radius: 70,
+                iconSize: 80,
               ),
             ),
             //SMALL CONTAINER - edit profile pic
