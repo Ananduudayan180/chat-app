@@ -3,14 +3,14 @@ import 'package:chat_app/features/users/presentation/widgets/users_list_view.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UsersListPage extends StatefulWidget {
-  const UsersListPage({super.key});
+class UsersPage extends StatefulWidget {
+  const UsersPage({super.key});
 
   @override
-  State<UsersListPage> createState() => _UsersListPageState();
+  State<UsersPage> createState() => _UsersListPageState();
 }
 
-class _UsersListPageState extends State<UsersListPage> {
+class _UsersListPageState extends State<UsersPage> {
   @override
   void initState() {
     super.initState();
