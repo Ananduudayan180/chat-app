@@ -1,11 +1,11 @@
 import 'package:chat_app/core/widgets/my_textfield.dart';
+import 'package:chat_app/features/chat/presentation/widgets/stream_chats.dart';
 import 'package:chat_app/features/users/presentation/pages/users_page.dart';
-import 'package:chat_app/features/chat/presentation/widgets/chat_list.dart';
 import 'package:chat_app/features/chat/presentation/widgets/my_fab_button.dart';
 import 'package:flutter/material.dart';
 
-class ChatHomePage extends StatelessWidget {
-  ChatHomePage({super.key});
+class ChatPage extends StatelessWidget {
+  ChatPage({super.key});
 
   final searchController = TextEditingController();
 
@@ -36,11 +36,10 @@ class ChatHomePage extends StatelessWidget {
             ),
           ),
           //chat list
-          Expanded(
+          Flexible(
             child: Stack(
               children: [
-                //chat list
-                ChatList(),
+                StreamChats(),
                 //FAB
                 Positioned(
                   bottom: 20,
