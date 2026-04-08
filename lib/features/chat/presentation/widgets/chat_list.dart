@@ -1,58 +1,36 @@
+import 'package:chat_app/features/chat/domain/entity/chat_model.dart';
+import 'package:chat_app/features/chat/presentation/widgets/chat_tile.dart';
+import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
+import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
 import 'package:flutter/material.dart';
 
 class ChatList extends StatelessWidget {
-  const ChatList({super.key});
+  final List<ChatModel> chats;
+  const ChatList({super.key, required this.chats});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final profileservice = ProfileFirestoreService();
     return ListView.separated(
       itemBuilder: (context, index) {
+        final chat = chats[index];
+        final otherUserUid = chat.otherUserUid;
         //list tile
-        return ListTile(
-          leading: CircleAvatar(radius: 25),
-          title: Text('Sara Sanders'),
-          subtitle: Text(
-            'Hi..How are you?',
-            style: TextStyle(color: theme.dividerColor),
-          ),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '12:33',
-                style: TextStyle(
-                  color: theme.colorScheme.primary,
-                  fontSize: 12,
-                ),
-              ),
-              SizedBox(height: 5),
-              //notification container
-              Container(
-                width: 20,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.red, Colors.orangeAccent],
-                    begin: AlignmentGeometry.bottomLeft,
-                    end: AlignmentGeometry.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Text(
-                    '3',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        return FutureBuilder(
+          future: profileservice.fetchUserProfile(otherUserUid!),
+          builder:
+              (BuildContext context, AsyncSnapshot<ProfileModel?> snapshot) {
+                final profile = snapshot.data;
+                return profile != null
+                    ? ChatTile(profile: profile, chat: chat)
+                    : SizedBox();
+              },
         );
       },
       separatorBuilder: (context, index) {
         return Divider(indent: 78, thickness: 0.1);
       },
-      itemCount: 15,
+      itemCount: chats.length,
     );
   }
 }
