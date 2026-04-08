@@ -4,10 +4,16 @@ import 'package:chat_app/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
+import 'package:chat_app/features/chat/data/repo/chat_repo_impl.dart';
+import 'package:chat_app/features/chat/data/service/chat_service.dart';
+import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
 import 'package:chat_app/features/profile/data/repo/profile_repo_impl.dart';
 import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
 import 'package:chat_app/features/profile/data/service/profile_storage_service.dart';
 import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:chat_app/features/users/data/repo/users_repo_impl.dart';
+import 'package:chat_app/features/users/data/service/users_service.dart';
+import 'package:chat_app/features/users/presentation/bloc/users_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +37,6 @@ void main() async {
           create: (context) =>
               AuthBloc(authRepo: AuthRepoImpl(authService: AuthService()))
                 ..add(CheckAuthStatus()),
-          child: const MyApp(),
         ),
         //Profile Bloc
         BlocProvider<ProfileBloc>(
@@ -41,6 +46,16 @@ void main() async {
               storageService: ProfileStorageService(),
             ),
           ),
+        ),
+        //Users Bloc
+        BlocProvider(
+          create: (context) =>
+              UsersBloc(usersRepo: UsersRepoImpl(userService: UsersService())),
+        ),
+        //Chat Bloc
+        BlocProvider(
+          create: (context) =>
+              ChatBloc(chatRepo: ChatRepoImpl(chatService: ChatService())),
         ),
       ],
       child: const MyApp(),
