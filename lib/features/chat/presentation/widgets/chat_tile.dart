@@ -22,9 +22,15 @@ class ChatTile extends StatelessWidget {
 
     return ListTile(
       //navigate to msg page
-      onTap: () => Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => MessagePage())),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => MessagePage(
+            otherUserUid: profile.uid,
+            name: profile.name,
+            profileImageUrl: profile.profileImageUrl,
+          ),
+        ),
+      ),
       leading: CommonProfileAvatar(profileImageUrl: profile.profileImageUrl),
       //title
       title: Text(profile.name),

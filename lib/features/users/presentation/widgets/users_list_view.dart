@@ -1,5 +1,6 @@
 import 'package:chat_app/core/widgets/common_profile_avatar.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
+import 'package:chat_app/features/chat/presentation/pages/message_page.dart';
 import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 import 'package:flutter/material.dart';
 
@@ -26,9 +27,16 @@ class UsersListView extends StatelessWidget {
 
         //list tile
         return ListTile(
-          onTap: () {
-            //navigate to chat
-          },
+          //navigate to chat page
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => MessagePage(
+                otherUserUid: user.uid,
+                name: user.name,
+                profileImageUrl: user.profileImageUrl,
+              ),
+            ),
+          ),
           //profile image
           leading: CommonProfileAvatar(profileImageUrl: user.profileImageUrl),
           //user name
