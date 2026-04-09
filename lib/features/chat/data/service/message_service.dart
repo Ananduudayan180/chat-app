@@ -18,4 +18,17 @@ class MessageService {
           }).toList();
         });
   }
+
+  Future<void> saveMessage(MessageModel message, String chatId) async {
+    try {
+      await _firestore
+          .collection('chats')
+          .doc(chatId)
+          .collection('messages')
+          .doc()
+          .set(message.toJson());
+    } catch (e) {
+      throw Exception('Failed to send message $e');
+    }
+  }
 }

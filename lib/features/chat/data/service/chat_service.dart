@@ -21,4 +21,19 @@ class ChatService {
           }).toList();
         });
   }
+
+  Future<void> updateMetaChat(
+    ChatModel chat,
+    String chatId,
+    List<String> participants,
+  ) async {
+    try {
+      await _firestore
+          .collection('chats')
+          .doc(chatId)
+          .set(chat.toJson(participants), SetOptions(merge: true));
+    } catch (e) {
+      throw Exception('Failed to update meta chat $e');
+    }
+  }
 }
