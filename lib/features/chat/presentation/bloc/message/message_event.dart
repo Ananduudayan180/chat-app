@@ -8,3 +8,15 @@ final class StreamMessageEvent extends MessageEvent {
 
   StreamMessageEvent({required this.chatId});
 }
+
+final class SaveMessageEvent extends MessageEvent {
+  final MessageModel message;
+  final String chatId;
+  final List<String> participants;
+
+  SaveMessageEvent({
+    required this.message,
+    required this.chatId,
+    required this.participants,
+  });
+}

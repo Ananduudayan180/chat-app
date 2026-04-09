@@ -20,5 +20,18 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
             MessageError(errorMsg: error.toString()),
       );
     });
+
+    //send message
+    on<SaveMessageEvent>((event, emit) async {
+      try {
+        await _chatRepo.saveMessage(
+          event.message,
+          event.chatId,
+          event.participants,
+        );
+      } on Exception catch (e) {
+        emit(MessageError(errorMsg: e.toString()));
+      }
+    });
   }
 }
