@@ -1,8 +1,10 @@
 import 'package:chat_app/core/widgets/common_profile_avatar.dart';
 import 'package:chat_app/core/widgets/my_textfield.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
+import 'package:chat_app/features/chat/presentation/bloc/message/message_bloc.dart';
 import 'package:chat_app/features/chat/presentation/widgets/stream_message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessagePage extends StatefulWidget {
   final String otherUserUid;
@@ -23,22 +25,30 @@ class _MessagePageState extends State<MessagePage> {
   final _messageController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    context.read<MessageBloc>().add(
+      StreamMessageEvent(chatId: genarateChatId()),
+    );
+  }
+
+  @override
   void dispose() {
     _messageController.dispose();
     super.dispose();
   }
 
+  final currentUserUid = AuthService().currentUserUid;
+  //genarate chatId
+  String genarateChatId() {
+    final ids = [currentUserUid, widget.otherUserUid];
+    ids.sort();
+    final chatId = ids.join('_');
+    return chatId;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final currentUserUid = AuthService().currentUserUid;
-    //genarate chatId
-    String genarateChatId() {
-      final ids = [currentUserUid, widget.otherUserUid];
-      ids.sort();
-      final chatId = ids.join('_');
-      return chatId;
-    }
-
     final theme = Theme.of(context).colorScheme;
     return Scaffold(
       //chat send textfiled
@@ -88,7 +98,7 @@ class _MessagePageState extends State<MessagePage> {
         ),
       ),
 
-      body: StreamMessage(chatId: genarateChatId()),
+      body: StreamMessage(),
     );
   }
 }
