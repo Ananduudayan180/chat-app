@@ -21,4 +21,21 @@ class ChatRepoImpl extends ChatRepo {
   @override
   Stream<List<MessageModel>> streamMessages(String chatId) =>
       _messageService.streamMessages(chatId);
+
+  @override
+  Future<void> saveMessage(
+    MessageModel message,
+    String chatId,
+    List<String> participants,
+  ) async {
+    final chat = ChatModel(
+      chatId: chatId,
+      lastMsg: message.text,
+      unreadCount: 0,
+      lastMsgTime: message.createdAt,
+      lastMsgSenderId: message.senderId,
+    );
+    await _chatService.updateMetaChat(chat, chatId, participants);
+    await _messageService.saveMessage(message, chatId);
+  }
 }
