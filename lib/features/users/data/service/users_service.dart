@@ -14,9 +14,9 @@ class UsersService {
       return usersDocs.map((doc) {
         final user = doc.data();
         return AppUserModel(
-          uid: user['id'],
+          uid: user['uid'],
           name: user['name'],
-          profileImageUrl: user['profileImageUrl'],
+          profileImageUrl: user['profileImageUrl'] ?? '',
         );
       }).toList();
     } on Exception catch (e) {
