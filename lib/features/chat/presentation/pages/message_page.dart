@@ -1,8 +1,10 @@
 import 'package:chat_app/core/widgets/common_profile_avatar.dart';
 import 'package:chat_app/core/widgets/my_textfield.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
+import 'package:chat_app/features/chat/domain/entity/message_model.dart';
 import 'package:chat_app/features/chat/presentation/bloc/message/message_bloc.dart';
 import 'package:chat_app/features/chat/presentation/widgets/stream_message.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,6 +49,25 @@ class _MessagePageState extends State<MessagePage> {
     return chatId;
   }
 
+  //send msg
+  void saveMessage() {
+    if (_messageController.text.isEmpty) return;
+    final message = MessageModel(
+      senderId: currentUserUid,
+      text: _messageController.text,
+      createdAt: Timestamp.now(),
+    );
+
+    context.read<MessageBloc>().add(
+      SaveMessageEvent(
+        message: message,
+        chatId: genarateChatId(),
+        participants: [currentUserUid, widget.otherUserUid],
+      ),
+    );
+    _messageController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -65,9 +86,7 @@ class _MessagePageState extends State<MessagePage> {
             ),
             SizedBox(width: 5),
             GestureDetector(
-              onTap: () {
-                //send msg
-              },
+              onTap: saveMessage,
               child: CircleAvatar(
                 backgroundColor: theme.surface,
                 radius: 22,
