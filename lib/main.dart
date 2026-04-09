@@ -6,7 +6,9 @@ import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
 import 'package:chat_app/features/chat/data/repo/chat_repo_impl.dart';
 import 'package:chat_app/features/chat/data/service/chat_service.dart';
+import 'package:chat_app/features/chat/data/service/message_service.dart';
 import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
+import 'package:chat_app/features/chat/presentation/bloc/message/message_bloc.dart';
 import 'package:chat_app/features/profile/data/repo/profile_repo_impl.dart';
 import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
 import 'package:chat_app/features/profile/data/service/profile_storage_service.dart';
@@ -23,11 +25,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   //supabase
   await Supabase.initialize(
     url: 'https://ulwvmxsnfnaddbwnssvf.supabase.co',
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsd3ZteHNuZm5hZGRid25zc3ZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNDQ2MTgsImV4cCI6MjA4OTkyMDYxOH0.XVpRoCotHVazq82qMLsW_0KZtdZcKnmPbiYTMiiwjok',
+  );
+  //instance
+  final chatRepoImpl = ChatRepoImpl(
+    chatService: ChatService(),
+    messageService: MessageService(),
   );
   runApp(
     MultiBlocProvider(
@@ -53,10 +61,9 @@ void main() async {
               UsersBloc(usersRepo: UsersRepoImpl(userService: UsersService())),
         ),
         //Chat Bloc
-        BlocProvider(
-          create: (context) =>
-              ChatBloc(chatRepo: ChatRepoImpl(chatService: ChatService())),
-        ),
+        BlocProvider(create: (context) => ChatBloc(chatRepo: chatRepoImpl)),
+        //Message Bloc
+        BlocProvider(create: (context) => MessageBloc(chatRepo: chatRepoImpl)),
       ],
       child: const MyApp(),
     ),
