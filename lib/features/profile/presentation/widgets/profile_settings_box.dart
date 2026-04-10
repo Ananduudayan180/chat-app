@@ -1,5 +1,6 @@
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';
+import 'package:chat_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,15 +31,22 @@ class ProfileSettingsBox extends StatelessWidget {
               onTap: () {},
             ),
             //dark mode
-            MyListTile(
-              title: 'Dark mode',
-              leadingIcon: Icons.dark_mode,
-              trailingButton: CupertinoSwitch(
-                activeTrackColor: theme.primary,
-                value: true,
-                onChanged: (value) {},
-              ),
-              onTap: null,
+            BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                return MyListTile(
+                  title: 'Dark mode',
+                  leadingIcon: state.isDark
+                      ? Icons.dark_mode
+                      : Icons.light_mode,
+                  trailingButton: CupertinoSwitch(
+                    activeTrackColor: theme.primary,
+                    value: state.isDark,
+                    onChanged: (value) =>
+                        context.read<ThemeBloc>().add(ToggleThemeEvent()),
+                  ),
+                  onTap: null,
+                );
+              },
             ),
             //settings
             MyListTile(
