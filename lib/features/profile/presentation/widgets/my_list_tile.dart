@@ -26,26 +26,23 @@ class MyListTile extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     return Column(
       children: [
-        //onTap
-        GestureDetector(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            //listTile
-            child: ListTile(
-              leading: Icon(
-                leadingIcon,
-                color: leadingColor ?? theme.dividerColor,
-              ),
-              title: Text(title, style: TextStyle(color: titleColor)),
-              trailing:
-                  trailingButton ??
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: trailingColor ?? theme.dividerColor,
-                    size: 18,
-                  ),
+        Padding(
+          padding: const EdgeInsets.all(5),
+          //listTile
+          child: ListTile(
+            onTap: onTap,
+            leading: Icon(
+              leadingIcon,
+              color: leadingColor ?? theme.dividerColor,
             ),
+            title: Text(title, style: TextStyle(color: titleColor)),
+            trailing:
+                trailingButton ??
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: trailingColor ?? theme.dividerColor,
+                  size: 18,
+                ),
           ),
         ),
         //divider

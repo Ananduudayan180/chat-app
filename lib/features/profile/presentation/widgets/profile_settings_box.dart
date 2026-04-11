@@ -10,7 +10,37 @@ class ProfileSettingsBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme theme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context).colorScheme;
+    //logout dialog
+    void logoutDialog() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            title: Text('Logout', style: TextStyle(fontSize: 22)),
+            content: Text('Do you want to logout?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.grey[500]),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  context.read<AuthBloc>().add(LogoutRequested());
+                },
+                child: Text('Logout', style: TextStyle(color: Colors.red)),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Container(
@@ -62,7 +92,7 @@ class ProfileSettingsBox extends StatelessWidget {
               titleColor: Colors.red,
               leadingColor: Colors.red,
               trailingColor: Colors.red,
-              onTap: () => context.read<AuthBloc>().add(LogoutRequested()),
+              onTap: logoutDialog,
             ),
           ],
         ),
