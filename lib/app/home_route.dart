@@ -30,7 +30,10 @@ class _HomeRouteState extends State<HomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       //my bottom bar
-      bottomNavigationBar: MyBottomBar(onTap: switchPages),
+      bottomNavigationBar: MyBottomBar(
+        onTap: switchPages,
+        currentIndex: currentIndex,
+      ),
       body: IndexedStack(index: currentIndex, children: pages),
     );
   }

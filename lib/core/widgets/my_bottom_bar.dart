@@ -1,38 +1,56 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyBottomBar extends StatelessWidget {
   final void Function(int index)? onTap;
-  const MyBottomBar({super.key, required this.onTap});
+  final int currentIndex;
+  const MyBottomBar({
+    super.key,
+    required this.onTap,
+    required this.currentIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
-    return CurvedNavigationBar(
-      height: 60,
-      animationDuration: Duration(milliseconds: 300),
-      animationCurve: Curves.fastOutSlowIn,
-      backgroundColor: Colors.transparent,
-      buttonBackgroundColor: theme.primary,
-      color: theme.surface,
-      items: [
-        //chat
-        Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: Icon(Icons.chat_rounded, size: 26),
-        ),
-        //settings
-        Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: Icon(Icons.settings_rounded, size: 26),
-        ),
-        //profile
-        Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: Icon(Icons.group_rounded, size: 26),
-        ),
-      ],
-      onTap: onTap,
+    return TooltipTheme(
+      data: TooltipThemeData(
+        decoration: BoxDecoration(color: Colors.transparent),
+      ),
+      child: NavigationBar(
+        onDestinationSelected: onTap,
+        selectedIndex: currentIndex,
+        indicatorColor: Colors.transparent,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        labelTextStyle: WidgetStatePropertyAll(TextStyle(fontSize: 0)),
+        height: 65,
+        destinations: [
+          NavigationDestination(
+            icon: FaIcon(FontAwesomeIcons.message),
+            selectedIcon: FaIcon(
+              FontAwesomeIcons.solidMessage,
+              color: theme.primary,
+            ),
+            label: '',
+          ),
+          NavigationDestination(
+            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+            selectedIcon: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: theme.primary,
+            ),
+            label: '',
+          ),
+          NavigationDestination(
+            icon: FaIcon(FontAwesomeIcons.user),
+            selectedIcon: FaIcon(
+              FontAwesomeIcons.solidUser,
+              color: theme.primary,
+            ),
+            label: '',
+          ),
+        ],
+      ),
     );
   }
 }
