@@ -24,3 +24,10 @@ final class RegisterRequested extends AuthEvent {
 }
 
 final class LogoutRequested extends AuthEvent {}
+
+final class DeleteAcRequested extends AuthEvent {
+  final String email;
+  final String pw;
+
+  DeleteAcRequested({required this.email, required this.pw});
+}
