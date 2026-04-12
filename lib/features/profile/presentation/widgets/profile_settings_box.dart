@@ -1,4 +1,5 @@
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:chat_app/features/profile/presentation/pages/account_page.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';
 import 'package:chat_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileSettingsBox extends StatelessWidget {
-  const ProfileSettingsBox({super.key});
+  final String email;
+  const ProfileSettingsBox({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,13 @@ class ProfileSettingsBox extends StatelessWidget {
             MyListTile(
               title: 'Account',
               leadingIcon: Icons.person,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => AccountPage(email: email),
+                  ),
+                );
+              },
             ),
             //dark mode
             BlocBuilder<ThemeBloc, ThemeState>(
