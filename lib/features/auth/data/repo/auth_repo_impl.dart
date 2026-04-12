@@ -20,4 +20,9 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   User? checkAuthStatus() => _authService.checkAuthStatus();
+
+  //delete account
+  @override
+  Future<void> deleteAccount(String email, String pw) =>
+      _authService.deleteAccount(email, pw);
 }
