@@ -36,4 +36,14 @@ class ProfileFirestoreService {
       throw Exception('Update profile failed');
     }
   }
+
+  Future<void> updateUserName(String currentUserUid, String newName) async {
+    try {
+      await _firestore.collection('users').doc(currentUserUid).update({
+        'name': newName,
+      });
+    } catch (e) {
+      throw Exception('Failed to update name $e');
+    }
+  }
 }
