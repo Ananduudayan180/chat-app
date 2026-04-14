@@ -15,8 +15,7 @@ class ChatRepoImpl extends ChatRepo {
        _chatService = chatService;
 
   @override
-  Stream<List<ChatModel>> streamChats(String currentUserUid) =>
-      _chatService.streamChats(currentUserUid);
+  Stream<List<ChatModel>> streamChats() => _chatService.streamChats();
 
   @override
   Stream<List<MessageModel>> streamMessages(String chatId) =>

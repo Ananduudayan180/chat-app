@@ -1,13 +1,14 @@
+import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/domain/entity/chat_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatService {
   final _firestore = FirebaseFirestore.instance;
 
-  Stream<List<ChatModel>> streamChats(String currentUserUid) {
+  Stream<List<ChatModel>> streamChats() {
     return _firestore
         .collection('chats')
-        .where('participants', arrayContains: currentUserUid)
+        .where('participants', arrayContains: AuthService().currentUserUid)
         .orderBy('lastMsgTime', descending: true)
         .snapshots()
         .map((snapshot) {
@@ -15,6 +16,7 @@ class ChatService {
             final chat = doc.data();
             final List participants = chat['participants'];
             final otherUserUid = participants.firstWhere((uid) {
+              final currentUserUid = AuthService().currentUserUid;
               return uid != currentUserUid;
             });
             return ChatModel.fromJson(chat, otherUserUid);

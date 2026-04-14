@@ -1,4 +1,3 @@
-import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
 import 'package:chat_app/features/chat/presentation/widgets/chat_list.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +14,7 @@ class _StreamChatsState extends State<StreamChats> {
   @override
   void initState() {
     super.initState();
-    final currentUserUid = AuthService().currentUserUid;
-    context.read<ChatBloc>().add(
-      StreamChatsEvent(currentUserUid: currentUserUid),
-    );
+    context.read<ChatBloc>().add(StreamChatsEvent());
   }
 
   @override

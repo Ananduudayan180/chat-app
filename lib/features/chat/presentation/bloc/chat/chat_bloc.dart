@@ -14,7 +14,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<StreamChatsEvent>((event, emit) async {
       emit(ChatLoading());
       await emit.forEach(
-        _chatRepo.streamChats(event.currentUserUid),
+        _chatRepo.streamChats(),
         onData: (chats) => ChatLoaded(chats: chats),
         onError: (error, stackTrace) => ChatError(errorMsg: error.toString()),
       );
