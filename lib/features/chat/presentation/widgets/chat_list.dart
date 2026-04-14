@@ -23,7 +23,16 @@ class ChatList extends StatelessWidget {
                 final profile = snapshot.data;
                 return profile != null
                     ? ChatTile(profile: profile, chat: chat)
-                    : SizedBox();
+                    : ChatTile(
+                        chat: chat,
+                        isDeleted: true,
+                        profile: ProfileModel(
+                          uid: otherUserUid,
+                          name: 'Deleted User',
+                          email: '',
+                          profileImageUrl: '',
+                        ),
+                      );
               },
         );
       },

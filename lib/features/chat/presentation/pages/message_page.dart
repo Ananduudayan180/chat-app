@@ -12,11 +12,13 @@ class MessagePage extends StatefulWidget {
   final String otherUserUid;
   final String name;
   final String profileImageUrl;
+  final bool isDeleted;
   const MessagePage({
     super.key,
     required this.otherUserUid,
     required this.name,
     required this.profileImageUrl,
+    required this.isDeleted,
   });
 
   @override
@@ -79,8 +81,11 @@ class _MessagePageState extends State<MessagePage> {
           children: [
             Expanded(
               child: MyTextField(
+                enable: !widget.isDeleted,
                 controller: _messageController,
-                hintText: 'Send message',
+                hintText: !widget.isDeleted
+                    ? 'Send message'
+                    : 'You can’t message this user',
                 validator: null,
               ),
             ),

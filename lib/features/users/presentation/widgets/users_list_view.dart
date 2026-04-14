@@ -34,6 +34,7 @@ class UsersListView extends StatelessWidget {
                 otherUserUid: user.uid,
                 name: user.name,
                 profileImageUrl: user.profileImageUrl,
+                isDeleted: false,
               ),
             ),
           ),

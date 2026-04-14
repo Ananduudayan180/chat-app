@@ -9,7 +9,13 @@ import 'package:intl/intl.dart';
 class ChatTile extends StatelessWidget {
   final ProfileModel profile;
   final ChatModel chat;
-  const ChatTile({super.key, required this.profile, required this.chat});
+  final bool isDeleted;
+  const ChatTile({
+    super.key,
+    required this.profile,
+    required this.chat,
+    this.isDeleted = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +34,7 @@ class ChatTile extends StatelessWidget {
             otherUserUid: profile.uid,
             name: profile.name,
             profileImageUrl: profile.profileImageUrl,
+            isDeleted: isDeleted,
           ),
         ),
       ),

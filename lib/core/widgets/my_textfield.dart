@@ -5,6 +5,7 @@ class MyTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final String hintText;
   final bool obscureText;
+  final bool enable;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
 
@@ -16,6 +17,7 @@ class MyTextField extends StatelessWidget {
     required this.validator,
     this.prefixIcon,
     this.suffixIcon,
+    this.enable = true,
   });
 
   @override
@@ -24,6 +26,7 @@ class MyTextField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 6),
       child: TextFormField(
+        enabled: enable,
         controller: controller,
         obscureText: obscureText,
         style: TextStyle(fontSize: 15),
