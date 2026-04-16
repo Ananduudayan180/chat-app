@@ -9,5 +9,5 @@ abstract class ProfileRepo {
     required String fileName,
   });
   Future<void> updateProfileImage(String url, String uid);
-  Future<void> updateUserName(String currentUserUid, String newName);
+  Future<ProfileModel?> updateUserName(String currentUserUid, String newName);
 }

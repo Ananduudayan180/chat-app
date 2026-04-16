@@ -37,6 +37,6 @@ class ProfileRepoImpl implements ProfileRepo {
       _firestoreService.updateProfileImage(url, uid);
 
   @override
-  Future<void> updateUserName(String currentUserUid, String newName) =>
+  Future<ProfileModel?> updateUserName(String currentUserUid, String newName) =>
       _firestoreService.updateUserName(currentUserUid, newName);
 }
