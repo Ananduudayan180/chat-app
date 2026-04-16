@@ -39,4 +39,8 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<ProfileModel?> updateUserName(String currentUserUid, String newName) =>
       _firestoreService.updateUserName(currentUserUid, newName);
+
+  @override
+  Future<void> deleteProfileImage(String currentUserUid) =>
+      _firestoreService.deleteProfileImage(currentUserUid);
 }

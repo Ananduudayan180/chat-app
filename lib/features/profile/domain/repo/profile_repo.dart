@@ -10,4 +10,5 @@ abstract class ProfileRepo {
   });
   Future<void> updateProfileImage(String url, String uid);
   Future<ProfileModel?> updateUserName(String currentUserUid, String newName);
+  Future<void> deleteProfileImage(String currentUserUid);
 }

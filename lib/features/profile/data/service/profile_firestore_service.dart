@@ -68,4 +68,14 @@ class ProfileFirestoreService {
       throw Exception('Failed to update name $e');
     }
   }
+
+  Future<void> deleteProfileImage(String currentUserUid) async {
+    try {
+      await _firestore.collection('users').doc(currentUserUid).update({
+        'profileImageUrl': FieldValue.delete(),
+      });
+    } catch (e) {
+      throw Exception('Failed to delete profile image $e');
+    }
+  }
 }
