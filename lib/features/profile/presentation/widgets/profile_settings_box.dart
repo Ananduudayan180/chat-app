@@ -1,4 +1,5 @@
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
 import 'package:chat_app/features/profile/presentation/pages/account_page.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';
 import 'package:chat_app/features/theme/presentation/bloc/theme_bloc.dart';
@@ -19,31 +20,16 @@ class ProfileSettingsBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     //logout dialog
-    void logoutDialog() {
-      showDialog(
+    void logout() {
+      Dialogs.showDialogBox(
+        title: 'Logout',
+        actionText: 'Logout',
+        actionColor: Colors.red,
         context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            title: Text('Logout', style: TextStyle(fontSize: 22)),
-            content: Text('Do you want to logout?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(color: Colors.grey[500]),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  context.read<AuthBloc>().add(LogoutRequested());
-                },
-                child: Text('Logout', style: TextStyle(color: Colors.red)),
-              ),
-            ],
-          );
+        content: Text('Do you want to logout?'),
+        onTap: () {
+          Navigator.pop(context);
+          context.read<AuthBloc>().add(LogoutRequested());
         },
       );
     }
@@ -106,7 +92,7 @@ class ProfileSettingsBox extends StatelessWidget {
               titleColor: Colors.red,
               leadingColor: Colors.red,
               trailingColor: Colors.red,
-              onTap: logoutDialog,
+              onTap: logout,
             ),
           ],
         ),
