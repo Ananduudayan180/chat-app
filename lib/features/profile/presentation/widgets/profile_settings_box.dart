@@ -8,7 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileSettingsBox extends StatelessWidget {
   final String email;
-  const ProfileSettingsBox({super.key, required this.email});
+  final String currentName;
+  const ProfileSettingsBox({
+    super.key,
+    required this.email,
+    required this.currentName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +68,8 @@ class ProfileSettingsBox extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => AccountPage(email: email),
+                    builder: (context) =>
+                        AccountPage(email: email, currentName: currentName),
                   ),
                 );
               },

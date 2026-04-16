@@ -1,6 +1,8 @@
 import 'package:chat_app/core/widgets/my_textfield.dart';
+import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/auth/presentation/utils/form_validator.dart';
+import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +10,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountPage extends StatelessWidget {
   final String email;
-  const AccountPage({super.key, required this.email});
+  final String currentName;
+  const AccountPage({
+    super.key,
+    required this.email,
+    required this.currentName,
+  });
 
   @override
   Widget build(BuildContext context) {
     final reAuthPwController = TextEditingController();
-    final changeNameController = TextEditingController();
+    final updateNameController = TextEditingController();
     final formKey = GlobalKey<FormState>();
+    final currentUserUid = AuthService().currentUserUid;
 
     void deleteAccount() {
       //enter pass
@@ -55,22 +63,30 @@ class AccountPage extends StatelessWidget {
       );
     }
 
-    void changeName() {
+    void updateName() {
       Dialogs.showDialogBox(
         title: 'Edit name',
-        actionText: 'Change',
+        actionText: 'Update',
         context: context,
         content: Form(
           key: formKey,
           child: MyTextField(
-            controller: changeNameController,
-            hintText: 'Name',
+            controller: updateNameController,
+            hintText: currentName,
             validator: FormValidator.name,
           ),
         ),
         onTap: () {
           //change name
-          if (formKey.currentState!.validate()) {}
+          if (formKey.currentState!.validate()) {
+            context.read<ProfileBloc>().add(
+              UpdateUserName(
+                currentUserUid: currentUserUid,
+                newName: updateNameController.text,
+              ),
+            );
+            Navigator.of(context).pop();
+          }
         },
       );
     }
@@ -86,28 +102,45 @@ class AccountPage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
-      body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state is Unauthenticated) {
-            Navigator.of(context).pop();
-          }
-        },
-        builder: (context, state) {
-          if (state is AuthLoading) {
-            return Center(child: CircularProgressIndicator());
-          }
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              children: [
-                //Edit name
-                MyListTile(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          children: [
+            //Edit name bloc
+            BlocConsumer<ProfileBloc, ProfileState>(
+              listener: (context, state) {
+                if (state is ProfileError) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.errorMsg)));
+                }
+                if (state is ProfileLoaded) {
+                  Navigator.of(context).pop();
+                }
+              },
+              builder: (context, state) {
+                if (state is ProfileLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return MyListTile(
                   title: 'Edit name',
-                  onTap: changeName,
+                  onTap: updateName,
                   leadingIcon: Icons.edit_outlined,
-                ),
-                //delete accout
-                MyListTile(
+                );
+              },
+            ),
+            //Delete account bloc
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is Unauthenticated) {
+                  Navigator.of(context).pop();
+                }
+              },
+              builder: (context, state) {
+                if (state is AuthLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return MyListTile(
                   title: 'Delete account',
                   onTap: deleteAccount,
                   leadingIcon: Icons.delete_outline,
@@ -115,11 +148,11 @@ class AccountPage extends StatelessWidget {
                   leadingColor: Colors.red,
                   trailingColor: Colors.red,
                   divider: false,
-                ),
-              ],
+                );
+              },
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

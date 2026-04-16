@@ -91,7 +91,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     profile: state.profile,
                   ),
                   //profile settings container
-                  ProfileSettingsBox(email: state.profile.email),
+                  ProfileSettingsBox(
+                    email: state.profile.email,
+                    currentName: state.profile.name,
+                  ),
                 ],
               ),
             ),
