@@ -63,5 +63,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(ProfileError(errorMsg: e.toString()));
       }
     });
+
+//delete image
+    on<DeleteProfileImage>((event, emit) async {
+      emit(ProfileLoading());
+      try {
+        await _profileRepo.deleteProfileImage(event.currentUserUid);
+        final profile = await _profileRepo.fetchUserProfile(
+          event.currentUserUid,
+        );
+        if (profile != null) {
+          emit(ProfileLoaded(profile: profile));
+        } else {
+          emit(ProfileError(errorMsg: 'Profile not found'));
+        }
+      } on Exception catch (e) {
+        emit(ProfileError(errorMsg: e.toString()));
+      }
+    });
   }
 }

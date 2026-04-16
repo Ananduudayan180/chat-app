@@ -28,3 +28,9 @@ final class UpdateUserName extends ProfileEvent {
 
   UpdateUserName({required this.currentUserUid, required this.newName});
 }
+
+final class DeleteProfileImage extends ProfileEvent {
+  final String currentUserUid;
+
+  DeleteProfileImage({required this.currentUserUid});
+}
