@@ -1,6 +1,7 @@
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:chat_app/features/profile/presentation/pages/preview_page.dart';
+import 'package:chat_app/features/profile/presentation/pages/view_profile_image.dart';
 import 'package:chat_app/features/profile/presentation/widgets/profile_card.dart';
 import 'package:chat_app/features/profile/presentation/widgets/profile_settings_box.dart';
 import 'package:file_picker/file_picker.dart';
@@ -86,7 +87,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   //profile card
                   ProfileCard(
-                    viewPic: () {},
+                    viewPic: () {
+                      if (state.profile.profileImageUrl.isEmpty) return;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewProfileImage(
+                            profileImageUrl: state.profile.profileImageUrl,
+                          ),
+                        ),
+                      );
+                    },
                     changePic: pickImage,
                     profile: state.profile,
                   ),
