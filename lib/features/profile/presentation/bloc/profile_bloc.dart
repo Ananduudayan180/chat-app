@@ -45,5 +45,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(ProfileError(errorMsg: e.toString()));
       }
     });
+
+    //update user name
+    on<UpdateUserName>((event, emit) async {
+      emit(ProfileLoading());
+      try {
+        final profile = await _profileRepo.updateUserName(
+          event.currentUserUid,
+          event.newName,
+        );
+        if (profile != null) {
+          emit(ProfileLoaded(profile: profile));
+        } else {
+          emit(ProfileError(errorMsg: 'Failed to update user name'));
+        }
+      } on Exception catch (e) {
+        emit(ProfileError(errorMsg: e.toString()));
+      }
+    });
   }
 }

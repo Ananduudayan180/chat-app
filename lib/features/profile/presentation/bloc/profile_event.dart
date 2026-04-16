@@ -21,3 +21,10 @@ final class UploadProfileImage extends ProfileEvent {
     required this.uid,
   });
 }
+
+final class UpdateUserName extends ProfileEvent {
+  final String currentUserUid;
+  final String newName;
+
+  UpdateUserName({required this.currentUserUid, required this.newName});
+}
