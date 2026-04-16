@@ -39,7 +39,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         if (profileModel != null) {
           emit(ProfileLoaded(profile: profileModel));
         } else {
-          emit(ProfileError(errorMsg: 'Upload profile image failed'));
+          emit(ProfileError(errorMsg: 'User profile not found'));
         }
       } catch (e) {
         emit(ProfileError(errorMsg: e.toString()));
@@ -50,21 +50,21 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UpdateUserName>((event, emit) async {
       emit(ProfileLoading());
       try {
-        final profile = await _profileRepo.updateUserName(
+        await _profileRepo.updateUserName(event.currentUserUid, event.newName);
+        final profile = await _profileRepo.fetchUserProfile(
           event.currentUserUid,
-          event.newName,
         );
         if (profile != null) {
           emit(ProfileLoaded(profile: profile));
         } else {
-          emit(ProfileError(errorMsg: 'Failed to update user name'));
+          emit(ProfileError(errorMsg: 'User profile not found'));
         }
       } on Exception catch (e) {
         emit(ProfileError(errorMsg: e.toString()));
       }
     });
 
-//delete image
+    //delete image
     on<DeleteProfileImage>((event, emit) async {
       emit(ProfileLoading());
       try {
@@ -75,7 +75,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         if (profile != null) {
           emit(ProfileLoaded(profile: profile));
         } else {
-          emit(ProfileError(errorMsg: 'Profile not found'));
+          emit(ProfileError(errorMsg: 'User profile not found'));
         }
       } on Exception catch (e) {
         emit(ProfileError(errorMsg: e.toString()));

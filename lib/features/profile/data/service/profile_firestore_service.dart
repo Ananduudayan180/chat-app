@@ -38,32 +38,11 @@ class ProfileFirestoreService {
   }
 
   //update name
-  Future<ProfileModel?> updateUserName(
-    String currentUserUid,
-    String newName,
-  ) async {
+  Future<void> updateUserName(String currentUserUid, String newName) async {
     try {
       await _firestore.collection('users').doc(currentUserUid).update({
         'name': newName,
       });
-      final userData = await _firestore
-          .collection('users')
-          .doc(currentUserUid)
-          .get();
-
-      if (userData.exists) {
-        final doc = userData.data();
-        if (doc != null) {
-          return ProfileModel(
-            uid: doc['uid'],
-            name: doc['name'],
-            email: doc['email'],
-            profileImageUrl: doc['profileImageUrl'] ?? '',
-          );
-        }
-      }
-
-      return null;
     } catch (e) {
       throw Exception('Failed to update name $e');
     }
