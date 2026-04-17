@@ -25,61 +25,64 @@ class RegisterPage extends StatelessWidget {
               context,
             ).showSnackBar(SnackBar(content: Text(state.errorMsg)));
           }
-        },
-        builder: (context, state) {
-          //loding
-          if (state is AuthLoading) {
-            return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }
           //loaded
           if (state is Authenticated) {
-            return HomeRoute();
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => HomeRoute()),
+              (route) => false,
+            );
           }
+        },
+        builder: (context, state) {
           //authInitial and unauthenticated
-          return Stack(
-            children: [
-              //Image
-              Image.asset(
-                'assets/images/registerblackwhite.jpeg',
-                fit: BoxFit.cover,
-              ),
-              //Auth column
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  //Divider container
-                  Container(
-                    width: double.infinity,
-                    height: 35,
-                    color: theme.colorScheme.primary,
-                  ),
-                  SizedBox(height: 10),
-                  //Auth Box
-                  RegisterBox(
-                    nameController: nameController,
-                    emailController: emailController,
-                    pwController: pwController,
-                    //register button tap
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
-                          RegisterRequested(
-                            name: nameController.text,
-                            email: emailController.text,
-                            pw: pwController.text,
-                          ),
-                        );
-                      }
-                    },
-                    //login or register
-                    toggle: toggle,
-                    //form validation
-                    formKey: formKey,
-                  ),
-                ],
-              ),
-            ],
-          );
+          if (state is AuthInitial || state is Unauthenticated) {
+            return Stack(
+              children: [
+                //Image
+                Image.asset(
+                  'assets/images/registerblackwhite.jpeg',
+                  fit: BoxFit.cover,
+                ),
+                //Auth column
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    //Divider container
+                    Container(
+                      width: double.infinity,
+                      height: 35,
+                      color: theme.colorScheme.primary,
+                    ),
+                    SizedBox(height: 10),
+                    //Auth Box
+                    RegisterBox(
+                      nameController: nameController,
+                      emailController: emailController,
+                      pwController: pwController,
+                      //register button tap
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                            RegisterRequested(
+                              name: nameController.text,
+                              email: emailController.text,
+                              pw: pwController.text,
+                            ),
+                          );
+                        }
+                      },
+                      //login or register
+                      toggle: toggle,
+                      //form validation
+                      formKey: formKey,
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
+          //auth loading | auth loaded
+          return Scaffold(body: Center(child: CircularProgressIndicator()));
         },
       ),
     );

@@ -24,59 +24,62 @@ class LoginPage extends StatelessWidget {
               context,
             ).showSnackBar(SnackBar(content: Text(state.errorMsg)));
           }
-        },
-        builder: (context, state) {
-          //loding
-          if (state is AuthLoading) {
-            return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }
           //loaded
           if (state is Authenticated) {
-            return HomeRoute();
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => HomeRoute()),
+              (route) => false,
+            );
           }
+        },
+        builder: (context, state) {
           //authInitial and unauthenticated
-          return Stack(
-            children: [
-              //Image
-              Image.asset(
-                'assets/images/loginblackwhite.jpeg',
-                fit: BoxFit.cover,
-              ),
-              //Auth column
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  //Divider container
-                  Container(
-                    width: double.infinity,
-                    height: 35,
-                    color: theme.primary,
-                  ),
-                  SizedBox(height: 10),
-                  //Auth Box
-                  LoginBox(
-                    emailController: emailController,
-                    pwController: pwController,
-                    //Login button tap
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
-                          LoginRequested(
-                            email: emailController.text,
-                            pw: pwController.text,
-                          ),
-                        );
-                      }
-                    },
-                    //login or register
-                    toggle: toggle,
-                    //form validation
-                    formKey: formKey,
-                  ),
-                ],
-              ),
-            ],
-          );
+          if (state is AuthInitial || state is Unauthenticated) {
+            return Stack(
+              children: [
+                //Image
+                Image.asset(
+                  'assets/images/loginblackwhite.jpeg',
+                  fit: BoxFit.cover,
+                ),
+                //Auth column
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    //Divider container
+                    Container(
+                      width: double.infinity,
+                      height: 35,
+                      color: theme.primary,
+                    ),
+                    SizedBox(height: 10),
+                    //Auth Box
+                    LoginBox(
+                      emailController: emailController,
+                      pwController: pwController,
+                      //Login button tap
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                            LoginRequested(
+                              email: emailController.text,
+                              pw: pwController.text,
+                            ),
+                          );
+                        }
+                      },
+                      //login or register
+                      toggle: toggle,
+                      //form validation
+                      formKey: formKey,
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
+          //auth loading | auth loaded
+          return Scaffold(body: Center(child: CircularProgressIndicator()));
         },
       ),
     );

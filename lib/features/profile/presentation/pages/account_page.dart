@@ -1,6 +1,7 @@
 import 'package:chat_app/core/widgets/my_textfield.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
 import 'package:chat_app/features/auth/presentation/utils/form_validator.dart';
 import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
@@ -56,6 +57,7 @@ class AccountPage extends StatelessWidget {
                   DeleteAcRequested(email: email, pw: reAuthPwController.text),
                 );
                 Navigator.pop(context);
+                reAuthPwController.clear();
               },
             );
           }
@@ -85,7 +87,7 @@ class AccountPage extends StatelessWidget {
                 newName: updateNameController.text,
               ),
             );
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
           }
         },
       );
@@ -133,7 +135,10 @@ class AccountPage extends StatelessWidget {
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is Unauthenticated) {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => AuthSwitcher()),
+                    (route) => false,
+                  );
                 }
               },
               builder: (context, state) {

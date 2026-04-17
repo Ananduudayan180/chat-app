@@ -1,4 +1,5 @@
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
 import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
 import 'package:chat_app/features/profile/presentation/pages/account_page.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';
@@ -85,14 +86,35 @@ class ProfileSettingsBox extends StatelessWidget {
               onTap: () {},
             ),
             //logout
-            MyListTile(
-              title: 'Logout',
-              leadingIcon: Icons.logout,
-              divider: false,
-              titleColor: Colors.red,
-              leadingColor: Colors.red,
-              trailingColor: Colors.red,
-              onTap: logout,
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                //Error
+                if (state is AuthError) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.errorMsg)));
+                }
+                if (state is Unauthenticated) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => AuthSwitcher()),
+                    (route) => false,
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state is AuthLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return MyListTile(
+                  title: 'Logout',
+                  leadingIcon: Icons.logout,
+                  divider: false,
+                  titleColor: Colors.red,
+                  leadingColor: Colors.red,
+                  trailingColor: Colors.red,
+                  onTap: logout,
+                );
+              },
             ),
           ],
         ),

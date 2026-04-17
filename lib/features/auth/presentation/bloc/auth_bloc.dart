@@ -31,8 +31,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       } on FirebaseAuthException catch (e) {
         emit(AuthError(errorMsg: e.message ?? 'Login failed'));
+        emit(Unauthenticated());
       } catch (e) {
         emit(AuthError(errorMsg: e.toString()));
+        emit(Unauthenticated());
       }
     });
 
@@ -52,8 +54,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       } on FirebaseAuthException catch (e) {
         emit(AuthError(errorMsg: e.message ?? 'Register failed'));
+        emit(Unauthenticated());
       } catch (e) {
         emit(AuthError(errorMsg: e.toString()));
+        emit(Unauthenticated());
       }
     });
 
