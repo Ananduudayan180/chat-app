@@ -17,4 +17,8 @@ class UsersRepoImpl implements UsersRepo {
   @override
   Future<void> unblockUser(String currentUserUid, String otherUserUid) =>
       _usersService.unblockUser(currentUserUid, otherUserUid);
+
+  @override
+  Future<List<String>> getBlockedUserIds(String currentUserUid) =>
+      _usersService.getBlockedUserIds(currentUserUid);
 }

@@ -45,4 +45,27 @@ class UsersService {
       throw Exception('Failed to unblock user');
     }
   }
+
+  //fetch blocked user ids
+  Future<List<String>> getBlockedUserIds(String currentUserUid) async {
+    try {
+      final userDoc = await _firestore
+          .collection('users')
+          .doc(currentUserUid)
+          .get();
+
+      if (userDoc.exists) {
+        final user = userDoc.data();
+        if (user != null) {
+          final List<String> blockedUserIds = List<String>.from(
+            user['blockedUserIds'] ?? [],
+          );
+          return blockedUserIds;
+        }
+      }
+      return [];
+    } catch (e) {
+      throw Exception('Failed to fetch blocked users');
+    }
+  }
 }
