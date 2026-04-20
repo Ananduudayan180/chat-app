@@ -14,7 +14,7 @@ import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:chat_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:chat_app/features/users/data/repo/users_repo_impl.dart';
 import 'package:chat_app/features/users/data/service/users_service.dart';
-import 'package:chat_app/features/users/presentation/bloc/users_bloc.dart';
+import 'package:chat_app/features/users/presentation/bloc/users/users_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,4 +1,4 @@
-import 'package:chat_app/features/users/presentation/bloc/users_bloc.dart';
+import 'package:chat_app/features/users/presentation/bloc/users/users_bloc.dart';
 import 'package:chat_app/features/users/presentation/widgets/users_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
