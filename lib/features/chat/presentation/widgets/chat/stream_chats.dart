@@ -1,5 +1,5 @@
 import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
-import 'package:chat_app/features/chat/presentation/widgets/chat_list.dart';
+import 'package:chat_app/features/chat/presentation/widgets/chat/chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

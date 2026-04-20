@@ -1,5 +1,5 @@
 import 'package:chat_app/features/chat/domain/entity/chat_model.dart';
-import 'package:chat_app/features/chat/presentation/widgets/chat_tile.dart';
+import 'package:chat_app/features/chat/presentation/widgets/chat/chat_tile.dart';
 import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
 import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
 import 'package:flutter/material.dart';

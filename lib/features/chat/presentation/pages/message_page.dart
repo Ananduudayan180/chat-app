@@ -3,7 +3,7 @@ import 'package:chat_app/core/widgets/my_textfield.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/domain/entity/message_model.dart';
 import 'package:chat_app/features/chat/presentation/bloc/message/message_bloc.dart';
-import 'package:chat_app/features/chat/presentation/widgets/stream_message.dart';
+import 'package:chat_app/features/chat/presentation/widgets/message/stream_message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

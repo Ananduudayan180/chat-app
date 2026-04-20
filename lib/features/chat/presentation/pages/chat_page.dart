@@ -1,7 +1,7 @@
 import 'package:chat_app/core/widgets/my_textfield.dart';
-import 'package:chat_app/features/chat/presentation/widgets/stream_chats.dart';
+import 'package:chat_app/features/chat/presentation/widgets/chat/stream_chats.dart';
 import 'package:chat_app/features/users/presentation/pages/users_page.dart';
-import 'package:chat_app/features/chat/presentation/widgets/my_fab_button.dart';
+import 'package:chat_app/features/chat/presentation/widgets/chat/my_fab_button.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
