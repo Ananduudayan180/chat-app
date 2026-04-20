@@ -14,6 +14,7 @@ import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:chat_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:chat_app/features/users/data/repo/users_repo_impl.dart';
 import 'package:chat_app/features/users/data/service/users_service.dart';
+import 'package:chat_app/features/users/presentation/bloc/block/block_bloc.dart';
 import 'package:chat_app/features/users/presentation/bloc/users/users_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,11 +22,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AppProviders extends StatelessWidget {
   AppProviders({super.key});
 
-  //instance
+  //instance - chat repo
   final chatRepoImpl = ChatRepoImpl(
     chatService: ChatService(),
     messageService: MessageService(),
   );
+  //users repo
+  final usersRepoImpl = UsersRepoImpl(userService: UsersService());
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +50,9 @@ class AppProviders extends StatelessWidget {
           ),
         ),
         //Users Bloc
-        BlocProvider(
-          create: (context) =>
-              UsersBloc(usersRepo: UsersRepoImpl(userService: UsersService())),
-        ),
+        BlocProvider(create: (context) => UsersBloc(usersRepo: usersRepoImpl)),
+        //Block Bloc
+        BlocProvider(create: (context) => BlockBloc(usersRepo: usersRepoImpl)),
         //Chat Bloc
         BlocProvider(create: (context) => ChatBloc(chatRepo: chatRepoImpl)),
         //Message Bloc
