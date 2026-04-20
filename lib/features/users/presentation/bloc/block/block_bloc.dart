@@ -40,5 +40,18 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
         emit(BlockError(errorMsg: e.toString()));
       }
     });
+
+    //get blocked ids
+    on<GetBlockedUserIds>((event, emit) async {
+      emit(BlockLoading());
+      try {
+        final blockedUserIds = await _usersRepo.getBlockedUserIds(
+          event.currentUserUid,
+        );
+        emit(BlockedUserIdsLoaded(blockedUserIds: blockedUserIds));
+      } on Exception catch (e) {
+        emit(BlockError(errorMsg: e.toString()));
+      }
+    });
   }
 }

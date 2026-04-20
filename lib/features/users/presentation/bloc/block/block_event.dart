@@ -16,3 +16,9 @@ final class UnblockUser extends BlockEvent {
 
   UnblockUser({required this.currentUserUid, required this.otherUserUid});
 }
+
+final class GetBlockedUserIds extends BlockEvent {
+  final String currentUserUid;
+
+  GetBlockedUserIds({required this.currentUserUid});
+}
