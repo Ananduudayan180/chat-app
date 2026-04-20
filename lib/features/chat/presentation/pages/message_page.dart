@@ -4,9 +4,11 @@ import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/domain/entity/message_model.dart';
 import 'package:chat_app/features/chat/presentation/bloc/message/message_bloc.dart';
 import 'package:chat_app/features/chat/presentation/widgets/message/stream_message.dart';
+import 'package:chat_app/features/users/presentation/bloc/block/block_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MessagePage extends StatefulWidget {
   final String otherUserUid;
@@ -120,6 +122,42 @@ class _MessagePageState extends State<MessagePage> {
             Text(widget.name, style: TextStyle(fontSize: 18)),
           ],
         ),
+        actions: [
+          MenuAnchor(
+            style: MenuStyle(
+              backgroundColor: WidgetStatePropertyAll(
+                Theme.of(context).scaffoldBackgroundColor,
+              ),
+              elevation: const WidgetStatePropertyAll(8),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+            ),
+            builder: (context, controller, child) {
+              return IconButton(
+                onPressed: () =>
+                    controller.isOpen ? controller.close() : controller.open(),
+                icon: Icon(Icons.more_vert_outlined),
+              );
+            },
+            menuChildren: [
+              MenuItemButton(
+                leadingIcon: FaIcon(
+                  FontAwesomeIcons.ban,
+                  color: Colors.red,
+                  size: 18,
+                ),
+                child: Text('Block', style: TextStyle(color: Colors.red)),
+                onPressed: () => context.read<BlockBloc>().add(
+                  BlockUser(
+                    currentUserUid: currentUserUid,
+                    otherUserUid: widget.otherUserUid,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
 
       body: StreamMessage(),
