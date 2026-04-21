@@ -1,6 +1,7 @@
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
 import 'package:chat_app/features/profile/presentation/pages/account_page.dart';
+import 'package:chat_app/features/profile/presentation/pages/settings_page.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';
 import 'package:chat_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,7 +83,9 @@ class ProfileSettingsBox extends StatelessWidget {
             MyListTile(
               title: 'Settings',
               leadingIcon: Icons.settings,
-              onTap: () {},
+              onTap: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (context) => SettingsPage())),
             ),
             //logout
             MyListTile(
