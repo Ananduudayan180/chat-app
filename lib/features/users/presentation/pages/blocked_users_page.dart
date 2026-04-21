@@ -1,5 +1,6 @@
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/users/presentation/bloc/block/block_bloc.dart';
+import 'package:chat_app/features/users/presentation/bloc/users/users_bloc.dart';
 import 'package:chat_app/features/users/presentation/widgets/block_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ class BlockedUsersPage extends StatefulWidget {
 }
 
 class _BlockedUsersPageState extends State<BlockedUsersPage> {
+  final currentUserUid = AuthService().currentUserUid;
   @override
   void initState() {
     super.initState();
@@ -42,7 +44,10 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
           }
           if (state is BlockSuccess) {
             context.read<BlockBloc>().add(
-              GetBlockedUserIds(currentUserUid: AuthService().currentUserUid),
+              GetBlockedUserIds(currentUserUid: currentUserUid),
+            );
+            context.read<UsersBloc>().add(
+              FetchUsers(currentUserUid: currentUserUid),
             );
           }
         },
