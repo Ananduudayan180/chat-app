@@ -15,7 +15,14 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       emit(UsersLoading());
       try {
         final users = await _usersRepo.fetchUsers();
-        emit(UsersLoaded(users: users));
+        final blockedUsersIds = await _usersRepo.getBlockedUserIds(
+          event.currentUserUid,
+        );
+        //filtering
+        final unblockedUsers = users.where((user) {
+          return !blockedUsersIds.contains(user.uid);
+        }).toList();
+        emit(UsersLoaded(users: unblockedUsers));
       } catch (e) {
         emit(UsersError(errorMsg: e.toString()));
       }

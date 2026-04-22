@@ -1,9 +1,9 @@
-import 'package:chat_app/core/widgets/common_profile_avatar.dart';
-import 'package:chat_app/core/widgets/my_textfield.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/domain/entity/message_model.dart';
 import 'package:chat_app/features/chat/presentation/bloc/message/message_bloc.dart';
-import 'package:chat_app/features/chat/presentation/widgets/stream_message.dart';
+import 'package:chat_app/features/chat/presentation/widgets/message/massage_send_field.dart';
+import 'package:chat_app/features/chat/presentation/widgets/message/message_appbar.dart';
+import 'package:chat_app/features/chat/presentation/widgets/message/stream_message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,12 +13,14 @@ class MessagePage extends StatefulWidget {
   final String name;
   final String profileImageUrl;
   final bool isDeleted;
+  final bool isBlocked;
   const MessagePage({
     super.key,
     required this.otherUserUid,
     required this.name,
     required this.profileImageUrl,
     required this.isDeleted,
+    required this.isBlocked,
   });
 
   @override
@@ -72,56 +74,23 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
     return Scaffold(
       //chat send textfiled
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
-        child: Row(
-          children: [
-            Expanded(
-              child: MyTextField(
-                enable: !widget.isDeleted,
-                controller: _messageController,
-                hintText: !widget.isDeleted
-                    ? 'Send message'
-                    : 'You can’t message this user',
-                validator: null,
-              ),
-            ),
-            SizedBox(width: 5),
-            GestureDetector(
-              onTap: saveMessage,
-              child: CircleAvatar(
-                backgroundColor: theme.surface,
-                radius: 22,
-                child: Icon(Icons.send, color: theme.primary),
-              ),
-            ),
-          ],
-        ),
+      bottomNavigationBar: MassageSendField(
+        blockState: widget.isBlocked,
+        isDeleted: widget.isDeleted,
+        messageController: _messageController,
+        onTap: widget.isBlocked || widget.isDeleted ? null : saveMessage,
       ),
       //AppBar
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios, size: 20),
-        ),
-        title: Row(
-          children: [
-            CommonProfileAvatar(
-              profileImageUrl: widget.profileImageUrl,
-              radius: 19,
-              iconSize: 26,
-            ),
-            SizedBox(width: 7),
-            Text(widget.name, style: TextStyle(fontSize: 18)),
-          ],
-        ),
+      appBar: MessageAppbar(
+        otherUserUid: widget.otherUserUid,
+        currentUserUid: currentUserUid,
+        isDeleted: widget.isDeleted,
+        blockState: widget.isBlocked,
+        name: widget.name,
+        profileImageUrl: widget.profileImageUrl,
       ),
-
       body: StreamMessage(),
     );
   }

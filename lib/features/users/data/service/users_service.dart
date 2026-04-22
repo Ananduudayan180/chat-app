@@ -23,4 +23,49 @@ class UsersService {
       throw Exception('Failed to fetch users $e');
     }
   }
+
+  //block user
+  Future<void> blockUser(String currentUserUid, String otherUserUid) async {
+    try {
+      await _firestore.collection('users').doc(currentUserUid).update({
+        'blockedUserIds': FieldValue.arrayUnion([otherUserUid]),
+      });
+    } catch (e) {
+      throw Exception('Failed to block user');
+    }
+  }
+
+  //unblock user
+  Future<void> unblockUser(String currentUserUid, String otherUserUid) async {
+    try {
+      await _firestore.collection('users').doc(currentUserUid).update({
+        'blockedUserIds': FieldValue.arrayRemove([otherUserUid]),
+      });
+    } catch (e) {
+      throw Exception('Failed to unblock user');
+    }
+  }
+
+  //fetch blocked user ids
+  Future<List<String>> getBlockedUserIds(String currentUserUid) async {
+    try {
+      final userDoc = await _firestore
+          .collection('users')
+          .doc(currentUserUid)
+          .get();
+
+      if (userDoc.exists) {
+        final user = userDoc.data();
+        if (user != null) {
+          final List<String> blockedUserIds = List<String>.from(
+            user['blockedUserIds'] ?? [],
+          );
+          return blockedUserIds;
+        }
+      }
+      return [];
+    } catch (e) {
+      throw Exception('Failed to fetch blocked users');
+    }
+  }
 }

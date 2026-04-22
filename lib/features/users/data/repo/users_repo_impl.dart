@@ -9,4 +9,16 @@ class UsersRepoImpl implements UsersRepo {
     : _usersService = userService;
   @override
   Future<List<AppUserModel>> fetchUsers() => _usersService.fetchUsers();
+
+  @override
+  Future<void> blockUser(String currentUserUid, String otherUserUid) =>
+      _usersService.blockUser(currentUserUid, otherUserUid);
+
+  @override
+  Future<void> unblockUser(String currentUserUid, String otherUserUid) =>
+      _usersService.unblockUser(currentUserUid, otherUserUid);
+
+  @override
+  Future<List<String>> getBlockedUserIds(String currentUserUid) =>
+      _usersService.getBlockedUserIds(currentUserUid);
 }
