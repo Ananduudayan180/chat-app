@@ -1,10 +1,8 @@
 import 'package:chat_app/core/widgets/common_profile_avatar.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
-import 'package:chat_app/features/users/presentation/bloc/block/block_bloc.dart';
+import 'package:chat_app/features/users/presentation/widgets/block_popup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BlockList extends StatelessWidget {
   final List<String> blockedUserIds;
@@ -13,6 +11,7 @@ class BlockList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileService = ProfileFirestoreService();
+    final currentUserUid = AuthService().currentUserUid;
     return ListView.separated(
       itemCount: blockedUserIds.length,
       itemBuilder: (context, index) {
@@ -28,40 +27,11 @@ class BlockList extends StatelessWidget {
                 ),
                 title: Text(profile.name),
                 //unblock
-                trailing: MenuAnchor(
-                  style: MenuStyle(
-                    alignment: Alignment(8, 1),
-                    padding: WidgetStateProperty.all(EdgeInsetsGeometry.zero),
-                    backgroundColor: WidgetStatePropertyAll(
-                      Theme.of(context).colorScheme.surface,
-                    ),
-                    elevation: const WidgetStatePropertyAll(8),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  builder: (context, controller, child) {
-                    return IconButton(
-                      onPressed: () => controller.isOpen
-                          ? controller.close()
-                          : controller.open(),
-                      icon: Icon(Icons.more_vert_outlined),
-                    );
-                  },
-                  menuChildren: [
-                    MenuItemButton(
-                      leadingIcon: FaIcon(FontAwesomeIcons.unlock, size: 18),
-                      child: Text('Unblock'),
-                      onPressed: () => context.read<BlockBloc>().add(
-                        UnblockUser(
-                          currentUserUid: AuthService().currentUserUid,
-                          otherUserUid: profile.uid,
-                        ),
-                      ),
-                    ),
-                  ],
+                trailing: BlockPopup(
+                  otherUserUid: profile.uid,
+                  currentUserUid: currentUserUid,
+                  isBlocked: true,
+                  bgColor: Theme.of(context).colorScheme.surface,
                 ),
               );
             }
