@@ -1,19 +1,19 @@
 import 'package:chat_app/core/widgets/common_profile_avatar.dart';
 import 'package:chat_app/features/chat/domain/entity/chat_model.dart';
 import 'package:chat_app/features/chat/presentation/pages/message_page.dart';
-import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
+import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChatTile extends StatelessWidget {
-  final ProfileModel profile;
+  final AppUserModel user;
   final ChatModel chat;
   final bool isDeleted;
   final bool isBlocked;
   const ChatTile({
     super.key,
-    required this.profile,
+    required this.user,
     required this.chat,
     this.isDeleted = false,
     this.isBlocked = false,
@@ -33,19 +33,19 @@ class ChatTile extends StatelessWidget {
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MessagePage(
-            otherUserUid: profile.uid,
-            name: profile.name,
-            profileImageUrl: profile.profileImageUrl,
+            otherUserUid: user.uid,
+            name: user.name,
+            profileImageUrl: user.profileImageUrl,
             isDeleted: isDeleted,
             isBlocked: isBlocked,
           ),
         ),
       ),
       leading: CommonProfileAvatar(
-        profileImageUrl: isBlocked ? '' : profile.profileImageUrl,
+        profileImageUrl: isBlocked ? '' : user.profileImageUrl,
       ),
       //title
-      title: Text(isBlocked ? 'Blocked user' : profile.name),
+      title: Text(isBlocked ? 'Blocked user' : user.name),
       //last msg
       subtitle: Text(chat.lastMsg, style: TextStyle(color: theme.dividerColor)),
       trailing: Column(

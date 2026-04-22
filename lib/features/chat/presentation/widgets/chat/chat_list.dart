@@ -1,8 +1,8 @@
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/domain/entity/chat_model.dart';
 import 'package:chat_app/features/chat/presentation/widgets/chat/chat_tile.dart';
-import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
-import 'package:chat_app/features/profile/domain/entity/profile_model.dart';
+import 'package:chat_app/features/users/data/service/users_service.dart';
+import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 import 'package:chat_app/features/users/presentation/bloc/block/block_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +13,7 @@ class ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profileservice = ProfileFirestoreService();
+    final usersService = UsersService();
     return BlocConsumer<BlockBloc, BlockState>(
       listener: (context, state) {
         if (state is BlockError) {
@@ -40,26 +40,26 @@ class ChatList extends StatelessWidget {
               final otherUserUid = chat.otherUserUid;
               //list tile
               return FutureBuilder(
-                future: profileservice.fetchUserProfile(otherUserUid!),
+                future: usersService.fetchUser(otherUserUid!),
                 builder:
                     (
                       BuildContext context,
-                      AsyncSnapshot<ProfileModel?> snapshot,
+                      AsyncSnapshot<AppUserModel?> snapshot,
                     ) {
                       if (snapshot.hasData && snapshot.data != null) {
-                        final profile = snapshot.data!;
-                        final isBlocked = blockedUsersIds.contains(profile.uid);
+                        final user = snapshot.data!;
+                        final isBlocked = blockedUsersIds.contains(user.uid);
                         return !isBlocked
                             //blocked user and unblocked users
-                            ? ChatTile(profile: profile, chat: chat)
+                            ? ChatTile(user: user, chat: chat)
                             : ChatTile(
                                 chat: chat,
                                 isBlocked: true,
-                                profile: ProfileModel(
+                                user: AppUserModel(
                                   uid: otherUserUid,
-                                  name: profile.name,
-                                  email: '',
-                                  profileImageUrl: profile.profileImageUrl,
+                                  name: user.name,
+                                  profileImageUrl: user.profileImageUrl,
+                                  blockedUserIds: user.blockedUserIds,
                                 ),
                               );
                       } else if (!snapshot.hasData && snapshot.data == null) {
@@ -67,11 +67,11 @@ class ChatList extends StatelessWidget {
                         return ChatTile(
                           chat: chat,
                           isDeleted: true,
-                          profile: ProfileModel(
+                          user: AppUserModel(
                             uid: otherUserUid,
                             name: 'Deleted User',
-                            email: '',
                             profileImageUrl: '',
+                            blockedUserIds: [],
                           ),
                         );
                       } else {
