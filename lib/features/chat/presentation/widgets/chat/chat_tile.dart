@@ -10,11 +10,13 @@ class ChatTile extends StatelessWidget {
   final ProfileModel profile;
   final ChatModel chat;
   final bool isDeleted;
+  final bool isBlocked;
   const ChatTile({
     super.key,
     required this.profile,
     required this.chat,
     this.isDeleted = false,
+    this.isBlocked = false,
   });
 
   @override
@@ -35,12 +37,15 @@ class ChatTile extends StatelessWidget {
             name: profile.name,
             profileImageUrl: profile.profileImageUrl,
             isDeleted: isDeleted,
+            isBlocked: isBlocked,
           ),
         ),
       ),
-      leading: CommonProfileAvatar(profileImageUrl: profile.profileImageUrl),
+      leading: CommonProfileAvatar(
+        profileImageUrl: isBlocked ? '' : profile.profileImageUrl,
+      ),
       //title
-      title: Text(profile.name),
+      title: Text(isBlocked ? 'Blocked user' : profile.name),
       //last msg
       subtitle: Text(chat.lastMsg, style: TextStyle(color: theme.dividerColor)),
       trailing: Column(

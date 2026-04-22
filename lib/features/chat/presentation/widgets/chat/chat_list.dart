@@ -22,6 +22,10 @@ class ChatList extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text(state.errorMsg)));
         }
         if (state is BlockSuccess) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.successMsg)));
+          // get blocked users ids
           context.read<BlockBloc>().add(
             GetBlockedUserIds(currentUserUid: AuthService().currentUserUid),
           );
@@ -50,11 +54,12 @@ class ChatList extends StatelessWidget {
                             ? ChatTile(profile: profile, chat: chat)
                             : ChatTile(
                                 chat: chat,
+                                isBlocked: true,
                                 profile: ProfileModel(
                                   uid: otherUserUid,
-                                  name: 'Blocked User',
+                                  name: profile.name,
                                   email: '',
-                                  profileImageUrl: '',
+                                  profileImageUrl: profile.profileImageUrl,
                                 ),
                               );
                       } else if (!snapshot.hasData && snapshot.data == null) {
