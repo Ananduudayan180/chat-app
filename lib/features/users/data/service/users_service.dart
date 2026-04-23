@@ -35,7 +35,7 @@ class UsersService {
         return AppUserModel(
           uid: user['uid'],
           name: user['name'],
-          profileImageUrl: user['profileImageUrl'],
+          profileImageUrl: user['profileImageUrl'] ?? '',
           blockedUserIds: List<String>.from(user['blockedUserIds'] ?? []),
         );
       }
