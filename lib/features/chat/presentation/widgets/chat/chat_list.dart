@@ -14,6 +14,8 @@ class ChatList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usersService = UsersService();
+    final currentUserUid = AuthService().currentUserUid;
+    //this bloc for get current user blocked ids
     return BlocConsumer<BlockBloc, BlockState>(
       listener: (context, state) {
         if (state is BlockError) {
@@ -46,9 +48,23 @@ class ChatList extends StatelessWidget {
                       BuildContext context,
                       AsyncSnapshot<AppUserModel?> snapshot,
                     ) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox();
+                      }
+                      if (snapshot.hasError) {
+                        return SizedBox();
+                      }
                       if (snapshot.hasData && snapshot.data != null) {
                         final user = snapshot.data!;
-                        final isBlocked = blockedUsersIds.contains(user.uid);
+                        final blockedByCurrentUser = blockedUsersIds.contains(
+                          user.uid,
+                        );
+                        final blockedByOtherUser = user.blockedUserIds.contains(
+                          currentUserUid,
+                        );
+                        final isBlocked =
+                            blockedByCurrentUser || blockedByOtherUser;
+
                         return !isBlocked
                             //blocked user and unblocked users
                             ? ChatTile(user: user, chat: chat)
@@ -62,7 +78,7 @@ class ChatList extends StatelessWidget {
                                   blockedUserIds: user.blockedUserIds,
                                 ),
                               );
-                      } else if (!snapshot.hasData && snapshot.data == null) {
+                      } else {
                         //deleted account
                         return ChatTile(
                           chat: chat,
@@ -74,8 +90,6 @@ class ChatList extends StatelessWidget {
                             blockedUserIds: [],
                           ),
                         );
-                      } else {
-                        return Center(child: CircularProgressIndicator());
                       }
                     },
               );
