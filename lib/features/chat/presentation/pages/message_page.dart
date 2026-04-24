@@ -4,23 +4,23 @@ import 'package:chat_app/features/chat/presentation/bloc/message/message_bloc.da
 import 'package:chat_app/features/chat/presentation/widgets/message/massage_send_field.dart';
 import 'package:chat_app/features/chat/presentation/widgets/message/message_appbar.dart';
 import 'package:chat_app/features/chat/presentation/widgets/message/stream_message.dart';
+import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
+import 'package:chat_app/features/users/presentation/bloc/block/block_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessagePage extends StatefulWidget {
-  final String otherUserUid;
-  final String name;
-  final String profileImageUrl;
+  final AppUserModel user;
   final bool isDeleted;
-  final bool isBlocked;
+  final bool blockedByCurrentUser;
+  final bool blockedByOtherUser;
   const MessagePage({
     super.key,
-    required this.otherUserUid,
-    required this.name,
-    required this.profileImageUrl,
+    required this.user,
     required this.isDeleted,
-    required this.isBlocked,
+    required this.blockedByCurrentUser,
+    required this.blockedByOtherUser,
   });
 
   @override
@@ -47,7 +47,7 @@ class _MessagePageState extends State<MessagePage> {
   final currentUserUid = AuthService().currentUserUid;
   //genarate chatId
   String genarateChatId() {
-    final ids = [currentUserUid, widget.otherUserUid];
+    final ids = [currentUserUid, widget.user.uid];
     ids.sort();
     final chatId = ids.join('_');
     return chatId;
@@ -66,7 +66,7 @@ class _MessagePageState extends State<MessagePage> {
       SaveMessageEvent(
         message: message,
         chatId: genarateChatId(),
-        participants: [currentUserUid, widget.otherUserUid],
+        participants: [currentUserUid, widget.user.uid],
       ),
     );
     _messageController.clear();
@@ -74,24 +74,41 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //chat send textfiled
-      bottomNavigationBar: MassageSendField(
-        blockState: widget.isBlocked,
-        isDeleted: widget.isDeleted,
-        messageController: _messageController,
-        onTap: widget.isBlocked || widget.isDeleted ? null : saveMessage,
-      ),
-      //AppBar
-      appBar: MessageAppbar(
-        otherUserUid: widget.otherUserUid,
-        currentUserUid: currentUserUid,
-        isDeleted: widget.isDeleted,
-        blockState: widget.isBlocked,
-        name: widget.name,
-        profileImageUrl: widget.profileImageUrl,
-      ),
-      body: StreamMessage(),
+    bool blockedByCurrentUser = widget.blockedByCurrentUser;
+    return BlocConsumer<BlockBloc, BlockState>(
+      buildWhen: (previous, current) => current is BlockSuccess,
+      listener: (context, state) {
+        if (state is BlockSuccess) {
+          blockedByCurrentUser = state.isBlocked;
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          //chat send textfiled
+          bottomNavigationBar: MassageSendField(
+            isBlocked: blockedByCurrentUser || widget.blockedByOtherUser,
+            isDeleted: widget.isDeleted,
+            messageController: _messageController,
+            onTap: saveMessage,
+            hintText: blockedByCurrentUser
+                ? 'You blocked this user'
+                : widget.blockedByOtherUser
+                ? 'You cannot message this user'
+                : widget.isDeleted
+                ? 'This account is deleted'
+                : 'Send message',
+          ),
+          //AppBar
+          appBar: MessageAppbar(
+            user: widget.user,
+            currentUserUid: currentUserUid,
+            isDeleted: widget.isDeleted,
+            isBlocked: blockedByCurrentUser || widget.blockedByOtherUser,
+            blockedByCurrentUser: blockedByCurrentUser,
+          ),
+          body: const StreamMessage(),
+        );
+      },
     );
   }
 }

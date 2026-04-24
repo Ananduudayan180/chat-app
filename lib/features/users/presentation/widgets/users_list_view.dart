@@ -31,11 +31,10 @@ class UsersListView extends StatelessWidget {
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => MessagePage(
-                otherUserUid: user.uid,
-                name: user.name,
-                profileImageUrl: user.profileImageUrl,
+                user: user,
                 isDeleted: false,
-                isBlocked: false,
+                blockedByCurrentUser: false,
+                blockedByOtherUser: false,
               ),
             ),
           ),

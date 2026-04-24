@@ -1,29 +1,25 @@
 import 'package:chat_app/core/widgets/common_profile_avatar.dart';
-import 'package:chat_app/features/users/presentation/bloc/block/block_bloc.dart';
+import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 import 'package:chat_app/features/users/presentation/widgets/block_popup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessageAppbar extends StatelessWidget implements PreferredSizeWidget {
-  final String otherUserUid;
+  final AppUserModel user;
   final String currentUserUid;
-  final String name;
-  final String profileImageUrl;
+  final bool blockedByCurrentUser;
   final bool isDeleted;
-  final bool blockState;
+  final bool isBlocked;
   const MessageAppbar({
     super.key,
-    required this.otherUserUid,
+    required this.user,
     required this.currentUserUid,
     required this.isDeleted,
-    required this.blockState,
-    required this.name,
-    required this.profileImageUrl,
+    required this.isBlocked,
+    required this.blockedByCurrentUser,
   });
 
   @override
   Widget build(BuildContext context) {
-    bool isBlocked = blockState;
     return AppBar(
       leading: IconButton(
         onPressed: () {
@@ -31,44 +27,28 @@ class MessageAppbar extends StatelessWidget implements PreferredSizeWidget {
         },
         icon: Icon(Icons.arrow_back_ios, size: 20),
       ),
-      title: BlocBuilder<BlockBloc, BlockState>(
-        buildWhen: (previous, current) => current is BlockSuccess,
-        builder: (context, state) {
-          if (state is BlockSuccess) {
-            isBlocked = state.isBlocked;
-          }
-          return Row(
-            children: [
-              CommonProfileAvatar(
-                profileImageUrl: isBlocked ? '' : profileImageUrl,
-                radius: 19,
-                iconSize: 26,
-              ),
-              SizedBox(width: 7),
-              Text(
-                isBlocked ? 'Blocked user' : name,
-                style: TextStyle(fontSize: 18),
-              ),
-            ],
-          );
-        },
+      title: Row(
+        children: [
+          CommonProfileAvatar(
+            profileImageUrl: isBlocked ? '' : user.profileImageUrl,
+            radius: 19,
+            iconSize: 26,
+          ),
+          SizedBox(width: 7),
+          Text(
+            isBlocked ? 'Blocked user' : user.name,
+            style: TextStyle(fontSize: 18),
+          ),
+        ],
       ),
       //block unblock popup
       actions: [
         !isDeleted
-            ? BlocBuilder<BlockBloc, BlockState>(
-                buildWhen: (previous, current) => current is BlockSuccess,
-                builder: (context, state) {
-                  if (state is BlockSuccess) {
-                    isBlocked = state.isBlocked;
-                  }
-                  return BlockPopup(
-                    otherUserUid: otherUserUid,
-                    currentUserUid: currentUserUid,
-                    isBlocked: isBlocked,
-                    bgColor: Theme.of(context).scaffoldBackgroundColor,
-                  );
-                },
+            ? BlockPopup(
+                otherUserUid: user.uid,
+                currentUserUid: currentUserUid,
+                isBlocked: blockedByCurrentUser,
+                bgColor: Theme.of(context).scaffoldBackgroundColor,
               )
             : SizedBox(),
       ],
