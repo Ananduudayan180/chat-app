@@ -70,13 +70,9 @@ class ChatList extends StatelessWidget {
                             ? ChatTile(user: user, chat: chat)
                             : ChatTile(
                                 chat: chat,
-                                isBlocked: true,
-                                user: AppUserModel(
-                                  uid: otherUserUid,
-                                  name: user.name,
-                                  profileImageUrl: user.profileImageUrl,
-                                  blockedUserIds: user.blockedUserIds,
-                                ),
+                                blockedByCurrentUser: blockedByCurrentUser,
+                                blockedByOtherUser: blockedByOtherUser,
+                                user: user,
                               );
                       } else {
                         //deleted account

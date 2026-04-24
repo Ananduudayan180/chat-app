@@ -10,13 +10,15 @@ class ChatTile extends StatelessWidget {
   final AppUserModel user;
   final ChatModel chat;
   final bool isDeleted;
-  final bool isBlocked;
+  final bool blockedByCurrentUser;
+  final bool blockedByOtherUser;
   const ChatTile({
     super.key,
     required this.user,
     required this.chat,
     this.isDeleted = false,
-    this.isBlocked = false,
+    this.blockedByCurrentUser = false,
+    this.blockedByOtherUser = false,
   });
 
   @override
@@ -33,19 +35,22 @@ class ChatTile extends StatelessWidget {
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MessagePage(
-            otherUserUid: user.uid,
-            name: user.name,
-            profileImageUrl: user.profileImageUrl,
+            user: user,
             isDeleted: isDeleted,
-            isBlocked: isBlocked,
+            blockedByCurrentUser: blockedByCurrentUser,
+            blockedByOtherUser: blockedByOtherUser,
           ),
         ),
       ),
       leading: CommonProfileAvatar(
-        profileImageUrl: isBlocked ? '' : user.profileImageUrl,
+        profileImageUrl: blockedByCurrentUser || blockedByOtherUser
+            ? ''
+            : user.profileImageUrl,
       ),
       //title
-      title: Text(isBlocked ? 'Blocked user' : user.name),
+      title: Text(
+        blockedByCurrentUser || blockedByOtherUser ? 'Blocked user' : user.name,
+      ),
       //last msg
       subtitle: Text(chat.lastMsg, style: TextStyle(color: theme.dividerColor)),
       trailing: Column(
