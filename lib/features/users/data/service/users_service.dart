@@ -17,10 +17,31 @@ class UsersService {
           uid: user['uid'],
           name: user['name'],
           profileImageUrl: user['profileImageUrl'] ?? '',
+          blockedUserIds: List<String>.from(user['blockedUserIds'] ?? []),
         );
       }).toList();
     } on Exception catch (e) {
       throw Exception('Failed to fetch users $e');
+    }
+  }
+
+  //fetch one user
+  Future<AppUserModel?> fetchUser(String uid) async {
+    try {
+      final usersDoc = await _firestore.collection('users').doc(uid).get();
+
+      if (usersDoc.exists && usersDoc.data() != null) {
+        final user = usersDoc.data()!;
+        return AppUserModel(
+          uid: user['uid'],
+          name: user['name'],
+          profileImageUrl: user['profileImageUrl'] ?? '',
+          blockedUserIds: List<String>.from(user['blockedUserIds'] ?? []),
+        );
+      }
+      return null;
+    } on Exception catch (e) {
+      throw Exception('Failed to fetch user $e');
     }
   }
 
