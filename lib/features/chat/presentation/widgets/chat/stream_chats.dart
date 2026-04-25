@@ -2,6 +2,7 @@ import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
 import 'package:chat_app/features/chat/presentation/widgets/chat/chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class StreamChats extends StatelessWidget {
   const StreamChats({super.key});
@@ -20,7 +21,18 @@ class StreamChats extends StatelessWidget {
         if (state is ChatLoaded) {
           if (state.chats.isEmpty) {
             //lottie
-            return Center(child: Text('Lottie'));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset('assets/lottie/message.json', height: 250),
+                  Text(
+                    'Start conversation',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            );
           } else {
             return ChatList(chats: state.chats);
           }
