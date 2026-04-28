@@ -49,4 +49,26 @@ class ChatService {
       throw Exception('Failed to delete chat');
     }
   }
+
+  Future<Timestamp> getChatDeleteTimestamp(String chatId) async {
+    try {
+      final docSnapshot = await _firestore
+          .collection('chats')
+          .doc(chatId)
+          .get();
+      if (docSnapshot.exists && docSnapshot.data() != null) {
+        final doc = docSnapshot.data()!;
+
+        final Map<String, dynamic> deletedAt = doc['deletedAt'] ?? {};
+
+        final Timestamp deleteTimestamp =
+            deletedAt[AuthService().currentUserUid] ?? Timestamp(0, 0);
+
+        return deleteTimestamp;
+      }
+      return Timestamp(0, 0);
+    } catch (e) {
+      throw Exception('Something went wrong');
+    }
+  }
 }

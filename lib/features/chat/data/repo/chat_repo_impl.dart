@@ -3,6 +3,7 @@ import 'package:chat_app/features/chat/data/service/message_service.dart';
 import 'package:chat_app/features/chat/domain/entity/chat_model.dart';
 import 'package:chat_app/features/chat/domain/entity/message_model.dart';
 import 'package:chat_app/features/chat/domain/repo/chat_repo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatRepoImpl extends ChatRepo {
   final ChatService _chatService;
@@ -42,4 +43,8 @@ class ChatRepoImpl extends ChatRepo {
   @override
   Future<void> deleteChat(String chatId, String currentUserUid) =>
       _chatService.deleteChat(chatId, currentUserUid);
+
+  @override
+  Future<Timestamp> getChatDeleteTimestamp(String chatId) =>
+      _chatService.getChatDeleteTimestamp(chatId);
 }
