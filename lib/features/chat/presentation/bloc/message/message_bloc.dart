@@ -13,8 +13,11 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     //stream msg
     on<StreamMessageEvent>((event, emit) async {
       emit(MessageLoading());
+      final lastDeletedAt = await _chatRepo.getChatDeleteTimestamp(
+        event.chatId,
+      );
       await emit.forEach(
-        _chatRepo.streamMessages(event.chatId),
+        _chatRepo.streamMessages(event.chatId, lastDeletedAt),
         onData: (messages) => MessageLoaded(messages: messages),
         onError: (error, stackTrace) =>
             MessageError(errorMsg: error.toString()),

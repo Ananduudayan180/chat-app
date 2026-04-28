@@ -4,7 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class ChatRepo {
   Stream<List<ChatModel>> streamChats();
-  Stream<List<MessageModel>> streamMessages(String chatId);
+  Stream<List<MessageModel>> streamMessages(
+    String chatId,
+    Timestamp lastDeletedAt,
+  );
   Future<void> saveMessage(
     MessageModel message,
     String chatId,

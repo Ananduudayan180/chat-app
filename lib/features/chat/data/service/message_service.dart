@@ -4,11 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MessageService {
   final _firestore = FirebaseFirestore.instance;
 
-  Stream<List<MessageModel>> streamMessages(String chatId) {
+  Stream<List<MessageModel>> streamMessages(
+    String chatId,
+    Timestamp lastDeletedAt,
+  ) {
     return _firestore
         .collection('chats')
         .doc(chatId)
         .collection('messages')
+        .where('createdAt', isGreaterThan: lastDeletedAt)
         .orderBy('createdAt', descending: false)
         .snapshots()
         .map((snapshot) {

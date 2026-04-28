@@ -19,8 +19,10 @@ class ChatRepoImpl extends ChatRepo {
   Stream<List<ChatModel>> streamChats() => _chatService.streamChats();
 
   @override
-  Stream<List<MessageModel>> streamMessages(String chatId) =>
-      _messageService.streamMessages(chatId);
+  Stream<List<MessageModel>> streamMessages(
+    String chatId,
+    Timestamp lastDeletedAt,
+  ) => _messageService.streamMessages(chatId, lastDeletedAt);
 
   @override
   Future<void> saveMessage(
