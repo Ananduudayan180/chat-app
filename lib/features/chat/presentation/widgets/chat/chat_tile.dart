@@ -1,9 +1,14 @@
 import 'package:chat_app/core/widgets/common_profile_avatar.dart';
+import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/domain/entity/chat_model.dart';
+import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
 import 'package:chat_app/features/chat/presentation/pages/message_page.dart';
+import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
 import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
 class ChatTile extends StatelessWidget {
@@ -30,56 +35,95 @@ class ChatTile extends StatelessWidget {
       return time;
     }
 
-    return ListTile(
-      //navigate to msg page
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => MessagePage(
-            user: user,
-            isDeleted: isDeleted,
-            blockedByCurrentUser: blockedByCurrentUser,
-            blockedByOtherUser: blockedByOtherUser,
-          ),
-        ),
-      ),
-      leading: CommonProfileAvatar(
-        profileImageUrl: blockedByCurrentUser || blockedByOtherUser
-            ? ''
-            : user.profileImageUrl,
-      ),
-      //title
-      title: Text(
-        blockedByCurrentUser || blockedByOtherUser ? 'Blocked user' : user.name,
-      ),
-      //last msg
-      subtitle: Text(chat.lastMsg, style: TextStyle(color: theme.dividerColor)),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    void deleteChat() {
+      Dialogs.showDialogBox(
+        title: 'Delete chat',
+        content: Text('Delete this chat from your list?'),
+        actionText: 'Delete',
+        actionColor: Colors.red,
+        context: context,
+        onTap: () {
+          Navigator.pop(context);
+          context.read<ChatBloc>().add(
+            DeleteChatEvent(
+              chatId: chat.chatId,
+              currentUserUid: AuthService().currentUserUid,
+            ),
+          );
+        },
+      );
+    }
+
+    return Slidable(
+      key: ValueKey(chat.chatId),
+      endActionPane: ActionPane(
+        extentRatio: 0.25,
+        motion: ScrollMotion(),
         children: [
-          Text(
-            formateTimestamp(chat.lastMsgTime),
-            style: TextStyle(color: theme.colorScheme.primary, fontSize: 12),
-          ),
-          SizedBox(height: 5),
-          //notification container
-          Container(
-            width: 18,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.red, Colors.orangeAccent],
-                begin: AlignmentGeometry.bottomLeft,
-                end: AlignmentGeometry.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: Text(
-                chat.unreadCount.toString(),
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-              ),
-            ),
+          SlidableAction(
+            backgroundColor: Colors.red,
+            onPressed: (context) => deleteChat(),
+            icon: Icons.delete_outline,
+            label: 'Delete',
           ),
         ],
+      ),
+      child: ListTile(
+        //navigate to msg page
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MessagePage(
+              user: user,
+              isDeleted: isDeleted,
+              blockedByCurrentUser: blockedByCurrentUser,
+              blockedByOtherUser: blockedByOtherUser,
+            ),
+          ),
+        ),
+        leading: CommonProfileAvatar(
+          profileImageUrl: blockedByCurrentUser || blockedByOtherUser
+              ? ''
+              : user.profileImageUrl,
+        ),
+        //title
+        title: Text(
+          blockedByCurrentUser || blockedByOtherUser
+              ? 'Blocked user'
+              : user.name,
+        ),
+        //last msg
+        subtitle: Text(
+          chat.lastMsg,
+          style: TextStyle(color: theme.dividerColor),
+        ),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              formateTimestamp(chat.lastMsgTime),
+              style: TextStyle(color: theme.colorScheme.primary, fontSize: 12),
+            ),
+            SizedBox(height: 5),
+            //notification container
+            Container(
+              width: 18,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.red, Colors.orangeAccent],
+                  begin: AlignmentGeometry.bottomLeft,
+                  end: AlignmentGeometry.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Center(
+                child: Text(
+                  chat.unreadCount.toString(),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
