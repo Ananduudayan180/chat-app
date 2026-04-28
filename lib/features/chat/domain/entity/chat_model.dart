@@ -7,6 +7,7 @@ class ChatModel {
   final String lastMsg;
   final int unreadCount;
   final Timestamp lastMsgTime;
+  final List visibleFor;
 
   ChatModel({
     required this.chatId,
@@ -14,6 +15,7 @@ class ChatModel {
     required this.unreadCount,
     required this.lastMsgTime,
     required this.lastMsgSenderId,
+    required this.visibleFor,
     this.otherUserUid,
   });
 
@@ -25,12 +27,14 @@ class ChatModel {
       lastMsg: json['lastMsg'],
       unreadCount: json['unreadCount'],
       lastMsgTime: json['lastMsgTime'],
+      visibleFor: json['visibleFor'],
     );
   }
 
   Map<String, dynamic> toJson(List<String> participants) {
     return {
       'chatId': chatId,
+      'visibleFor': visibleFor,
       'participants': participants,
       'lastMsgSenderId': lastMsgSenderId,
       'lastMsg': lastMsg,
