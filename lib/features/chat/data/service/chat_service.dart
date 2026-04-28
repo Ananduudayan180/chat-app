@@ -38,4 +38,15 @@ class ChatService {
       throw Exception('Failed to update meta chat $e');
     }
   }
+
+  Future<void> deleteChat(String chatId, String currentUserUid) async {
+    try {
+      await _firestore.collection('chats').doc(chatId).update({
+        'visibleFor': FieldValue.arrayRemove([currentUserUid]),
+        'deletedAt.$currentUserUid': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      throw Exception('Failed to delete chat');
+    }
+  }
 }

@@ -9,4 +9,5 @@ abstract class ChatRepo {
     String chatId,
     List<String> participants,
   );
+  Future<void> deleteChat(String chatId, String currentUserUid);
 }

@@ -33,8 +33,13 @@ class ChatRepoImpl extends ChatRepo {
       unreadCount: 0,
       lastMsgTime: message.createdAt,
       lastMsgSenderId: message.senderId,
+      visibleFor: participants,
     );
     await _chatService.updateMetaChat(chat, chatId, participants);
     await _messageService.saveMessage(message, chatId);
   }
+
+  @override
+  Future<void> deleteChat(String chatId, String currentUserUid) =>
+      _chatService.deleteChat(chatId, currentUserUid);
 }
