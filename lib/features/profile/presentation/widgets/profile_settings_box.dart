@@ -1,6 +1,6 @@
 import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
-import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
+import 'package:chat_app/core/dialog/dialogs.dart';
 import 'package:chat_app/features/profile/presentation/pages/account_page.dart';
 import 'package:chat_app/features/profile/presentation/pages/settings_page.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';

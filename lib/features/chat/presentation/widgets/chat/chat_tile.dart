@@ -3,7 +3,7 @@ import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/domain/entity/chat_model.dart';
 import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
 import 'package:chat_app/features/chat/presentation/pages/message_page.dart';
-import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
+import 'package:chat_app/core/dialog/dialogs.dart';
 import 'package:chat_app/features/users/domain/entity/app_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

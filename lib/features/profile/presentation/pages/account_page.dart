@@ -4,7 +4,7 @@ import 'package:chat_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:chat_app/features/auth/presentation/pages/auth_switcher.dart';
 import 'package:chat_app/features/auth/presentation/utils/form_validator.dart';
 import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
+import 'package:chat_app/core/dialog/dialogs.dart';
 import 'package:chat_app/features/profile/presentation/widgets/my_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

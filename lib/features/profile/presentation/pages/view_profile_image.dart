@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:chat_app/features/profile/presentation/dialog/dialogs.dart';
+import 'package:chat_app/core/dialog/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
