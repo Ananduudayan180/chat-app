@@ -1,7 +1,7 @@
 import 'package:chat_app/core/widgets/my_bottom_bar.dart';
 import 'package:chat_app/features/chat/presentation/pages/chat_page.dart';
 import 'package:chat_app/features/profile/presentation/pages/profile_page.dart';
-import 'package:chat_app/features/settings/presentation/pages/settings_page.dart';
+import 'package:chat_app/features/search/presentation/pages/search_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeRoute extends StatefulWidget {
@@ -16,7 +16,7 @@ int currentIndex = 0;
 class _HomeRouteState extends State<HomeRoute> {
   final List<Widget> pages = [
     ChatPage(),
-    const SettingsPage(),
+    const SearchPage(),
     const ProfilePage(),
   ];
   //switch pages
