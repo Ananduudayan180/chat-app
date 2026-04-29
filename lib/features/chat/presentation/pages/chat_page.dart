@@ -1,4 +1,3 @@
-import 'package:chat_app/core/widgets/my_textfield.dart';
 import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
 import 'package:chat_app/features/chat/presentation/widgets/chat/stream_chats.dart';
@@ -16,8 +15,6 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -33,24 +30,11 @@ class _ChatPageState extends State<ChatPage> {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            //title & text field
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //title
-                const Text(
-                  'Chatify',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                //my text field
-                MyTextField(
-                  controller: searchController,
-                  hintText: 'Search',
-                  validator: null,
-                ),
-              ],
+          AppBar(
+            backgroundColor: Colors.transparent,
+            title: Text(
+              'Chatify',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
           //chat list
