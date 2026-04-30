@@ -11,6 +11,9 @@ import 'package:chat_app/features/profile/data/repo/profile_repo_impl.dart';
 import 'package:chat_app/features/profile/data/service/profile_firestore_service.dart';
 import 'package:chat_app/features/profile/data/service/profile_storage_service.dart';
 import 'package:chat_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:chat_app/features/search/data/repo/search_repo_impl.dart';
+import 'package:chat_app/features/search/data/service/search_service.dart';
+import 'package:chat_app/features/search/presentation/bloc/search_bloc.dart';
 import 'package:chat_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:chat_app/features/users/data/repo/users_repo_impl.dart';
 import 'package:chat_app/features/users/data/service/users_service.dart';
@@ -59,6 +62,13 @@ class AppProviders extends StatelessWidget {
         BlocProvider(create: (context) => MessageBloc(chatRepo: chatRepoImpl)),
         //Theme Bloc
         BlocProvider(create: (context) => ThemeBloc()),
+        //Search Bloc
+        BlocProvider(
+          create: (context) => SearchBloc(
+            searchRepo: SearchRepoImpl(searchService: SearchService()),
+            usersRepo: usersRepoImpl,
+          ),
+        ),
       ],
       child: const MyApp(),
     );
