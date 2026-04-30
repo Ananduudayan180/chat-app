@@ -6,23 +6,28 @@ import 'package:flutter/material.dart';
 
 class UsersListView extends StatelessWidget {
   final List<AppUserModel> users;
+
   const UsersListView({super.key, required this.users});
 
   @override
   Widget build(BuildContext context) {
-    final currentUserUid = AuthService().currentUserUid;
     final theme = Theme.of(context);
+    final currentUserUid = AuthService().currentUserUid;
+
+    //filtering current user + blocked list
+    final usersList = users.where((user) {
+      return user.uid != currentUserUid &&
+          !user.blockedUserIds.contains(currentUserUid);
+    }).toList();
+
+    //Empty users
+    if (usersList.isEmpty) {
+      return Center(
+        child: Text('No users found', style: TextStyle(color: Colors.grey)),
+      );
+    }
     return ListView.separated(
       itemBuilder: (context, index) {
-        //filtering
-        final usersList = users.where((user) {
-          return user.uid != currentUserUid;
-        }).toList();
-
-        //Empty users
-        if (usersList.isEmpty) {
-          return Text('No users found');
-        }
         final user = usersList[index];
 
         //list tile
@@ -52,7 +57,7 @@ class UsersListView extends StatelessWidget {
       separatorBuilder: (context, index) {
         return Divider(indent: 78, thickness: 0.1);
       },
-      itemCount: users.length - 1,
+      itemCount: usersList.length,
     );
   }
 }
