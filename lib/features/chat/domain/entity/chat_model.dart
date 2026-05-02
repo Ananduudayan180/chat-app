@@ -5,17 +5,17 @@ class ChatModel {
   final String lastMsgSenderId;
   final String? otherUserUid;
   final String lastMsg;
-  final int unreadCount;
+  final int? unreadCount;
   final Timestamp lastMsgTime;
   final List visibleFor;
 
   ChatModel({
     required this.chatId,
     required this.lastMsg,
-    required this.unreadCount,
     required this.lastMsgTime,
     required this.lastMsgSenderId,
     required this.visibleFor,
+    this.unreadCount,
     this.otherUserUid,
   });
 
@@ -39,7 +39,7 @@ class ChatModel {
       'lastMsgSenderId': lastMsgSenderId,
       'lastMsg': lastMsg,
       'lastMsgTime': lastMsgTime,
-      'unreadCount': unreadCount,
+      'unreadCount': FieldValue.increment(1),
     };
   }
 }
