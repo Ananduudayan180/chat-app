@@ -33,7 +33,6 @@ class ChatRepoImpl extends ChatRepo {
     final chat = ChatModel(
       chatId: chatId,
       lastMsg: message.text,
-      unreadCount: 0,
       lastMsgTime: message.createdAt,
       lastMsgSenderId: message.senderId,
       visibleFor: participants,
@@ -49,4 +48,8 @@ class ChatRepoImpl extends ChatRepo {
   @override
   Future<Timestamp> getChatDeleteTimestamp(String chatId) =>
       _chatService.getChatDeleteTimestamp(chatId);
+
+  @override
+  Future<void> resetUnreadCount(String chatId) =>
+      _chatService.resetUnreadCount(chatId);
 }

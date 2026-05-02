@@ -71,4 +71,14 @@ class ChatService {
       throw Exception('Something went wrong');
     }
   }
+
+  Future<void> resetUnreadCount(String chatId) async {
+    try {
+      await _firestore.collection('chats').doc(chatId).update({
+        'unreadCount': 0,
+      });
+    } catch (e) {
+      throw Exception('Something weng wrong $e');
+    }
+  }
 }

@@ -15,4 +15,5 @@ abstract class ChatRepo {
   );
   Future<void> deleteChat(String chatId, String currentUserUid);
   Future<Timestamp> getChatDeleteTimestamp(String chatId);
+  Future<void> resetUnreadCount(String chatId);
 }
