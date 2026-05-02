@@ -1,15 +1,25 @@
-import 'package:chat_app/features/auth/data/service/auth_service.dart';
 import 'package:chat_app/features/chat/domain/entity/message_model.dart';
+import 'package:chat_app/features/chat/presentation/bloc/chat/chat_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessageList extends StatelessWidget {
   final List<MessageModel> messages;
-  const MessageList({super.key, required this.messages});
+  final String chatId;
+  final String currentUserUid;
+  const MessageList({
+    super.key,
+    required this.messages,
+    required this.chatId,
+    required this.currentUserUid,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
-    final currentUserUid = AuthService().currentUserUid;
+    if (messages.last.senderId != currentUserUid) {
+      context.read<ChatBloc>().add(ResetUnreadCountEvent(chatId: chatId));
+    }
     return ListView.builder(
       itemCount: messages.length,
       itemBuilder: (context, index) {

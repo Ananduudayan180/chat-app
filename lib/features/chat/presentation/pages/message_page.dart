@@ -106,7 +106,7 @@ class _MessagePageState extends State<MessagePage> {
             isBlocked: blockedByCurrentUser || widget.blockedByOtherUser,
             blockedByCurrentUser: blockedByCurrentUser,
           ),
-          body: const StreamMessage(),
+          body: StreamMessage(chatId: genarateChatId()),
         );
       },
     );
