@@ -29,6 +29,7 @@ class ChatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final currentUserUid = AuthService().currentUserUid;
     //formate time
     String formateTimestamp(Timestamp timestamp) {
       final time = DateFormat('h:mm a').format(timestamp.toDate());
@@ -47,7 +48,7 @@ class ChatTile extends StatelessWidget {
           context.read<ChatBloc>().add(
             DeleteChatEvent(
               chatId: chat.chatId,
-              currentUserUid: AuthService().currentUserUid,
+              currentUserUid: currentUserUid,
             ),
           );
         },
@@ -105,23 +106,28 @@ class ChatTile extends StatelessWidget {
             ),
             SizedBox(height: 5),
             //notification container
-            Container(
-              width: 18,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.red, Colors.orangeAccent],
-                  begin: AlignmentGeometry.bottomLeft,
-                  end: AlignmentGeometry.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Center(
-                child: Text(
-                  chat.unreadCount.toString(),
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+            chat.lastMsgSenderId != currentUserUid && chat.unreadCount! > 0
+                ? Container(
+                    width: 18,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.red, Colors.orangeAccent],
+                        begin: AlignmentGeometry.bottomLeft,
+                        end: AlignmentGeometry.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        chat.unreadCount.toString(),
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(),
           ],
         ),
       ),
