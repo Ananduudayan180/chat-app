@@ -11,3 +11,9 @@ final class DeleteChatEvent extends ChatEvent {
 
   DeleteChatEvent({required this.chatId, required this.currentUserUid});
 }
+
+final class ResetUnreadCountEvent extends ChatEvent {
+  final String chatId;
+
+  ResetUnreadCountEvent({required this.chatId});
+}

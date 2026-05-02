@@ -33,5 +33,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(ChatError(errorMsg: e.toString()));
       }
     });
+
+    //reset unread count
+    on<ResetUnreadCountEvent>((event, emit) async {
+      try {
+        await _chatRepo.resetUnreadCount(event.chatId);
+      } on Exception catch (e) {
+        emit(ChatError(errorMsg: e.toString()));
+      }
+    });
   }
 }
