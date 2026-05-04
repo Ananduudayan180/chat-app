@@ -13,7 +13,7 @@ class MessageService {
         .doc(chatId)
         .collection('messages')
         .where('createdAt', isGreaterThan: lastDeletedAt)
-        .orderBy('createdAt', descending: false)
+        .orderBy('createdAt', descending: true)
         .snapshots()
         .map((snapshot) {
           return snapshot.docs.map((doc) {
