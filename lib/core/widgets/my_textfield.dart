@@ -8,6 +8,7 @@ class MyTextField extends StatelessWidget {
   final bool enable;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final int? maxLines;
 
   const MyTextField({
     super.key,
@@ -17,6 +18,7 @@ class MyTextField extends StatelessWidget {
     required this.validator,
     this.prefixIcon,
     this.suffixIcon,
+    this.maxLines,
     this.enable = true,
   });
 
@@ -26,6 +28,8 @@ class MyTextField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 6),
       child: TextFormField(
+        minLines: 1,
+        maxLines: maxLines ?? 1,
         enabled: enable,
         controller: controller,
         obscureText: obscureText,

@@ -28,6 +28,7 @@ class MassageSendField extends StatelessWidget {
               enable: !isDeleted && !isBlocked,
               controller: messageController,
               hintText: hintText,
+              maxLines: 5,
               validator: null,
             ),
           ),

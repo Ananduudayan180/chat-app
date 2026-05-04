@@ -25,16 +25,17 @@ class StreamMessage extends StatelessWidget {
           if (state.messages.isEmpty) {
             //empty svg
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/svg/messaging_amico.svg',
-                    width: 250,
-                  ),
-                  SizedBox(height: 10),
-                  Text('Say hello 👋', style: TextStyle(color: Colors.grey)),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/messaging_amico.svg',
+                      width: 250,
+                    ),
+                    SizedBox(height: 10),
+                    Text('Say hello 👋', style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
               ),
             );
           } else {

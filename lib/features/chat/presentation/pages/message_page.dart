@@ -55,7 +55,7 @@ class _MessagePageState extends State<MessagePage> {
 
   //send msg
   void saveMessage() {
-    if (_messageController.text.isEmpty) return;
+    if (_messageController.text.trim().isEmpty) return;
     final message = MessageModel(
       senderId: currentUserUid,
       text: _messageController.text,
@@ -84,20 +84,6 @@ class _MessagePageState extends State<MessagePage> {
       },
       builder: (context, state) {
         return Scaffold(
-          //chat send textfiled
-          bottomNavigationBar: MassageSendField(
-            isBlocked: blockedByCurrentUser || widget.blockedByOtherUser,
-            isDeleted: widget.isDeleted,
-            messageController: _messageController,
-            onTap: saveMessage,
-            hintText: blockedByCurrentUser
-                ? 'You blocked this user'
-                : widget.blockedByOtherUser
-                ? 'You cannot message this user'
-                : widget.isDeleted
-                ? 'This account is deleted'
-                : 'Send message',
-          ),
           //AppBar
           appBar: MessageAppbar(
             user: widget.user,
@@ -106,7 +92,28 @@ class _MessagePageState extends State<MessagePage> {
             isBlocked: blockedByCurrentUser || widget.blockedByOtherUser,
             blockedByCurrentUser: blockedByCurrentUser,
           ),
-          body: StreamMessage(chatId: genarateChatId()),
+          body: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Column(
+              children: [
+                Expanded(child: StreamMessage(chatId: genarateChatId())),
+                //chat send textfiled
+                MassageSendField(
+                  isBlocked: blockedByCurrentUser || widget.blockedByOtherUser,
+                  isDeleted: widget.isDeleted,
+                  messageController: _messageController,
+                  onTap: saveMessage,
+                  hintText: blockedByCurrentUser
+                      ? 'You blocked this user'
+                      : widget.blockedByOtherUser
+                      ? 'You cannot message this user'
+                      : widget.isDeleted
+                      ? 'This account is deleted'
+                      : 'Send message',
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
