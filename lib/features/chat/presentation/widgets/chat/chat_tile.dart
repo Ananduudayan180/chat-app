@@ -94,6 +94,8 @@ class ChatTile extends StatelessWidget {
         ),
         //last msg
         subtitle: Text(
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           chat.lastMsg,
           style: TextStyle(color: theme.dividerColor),
         ),
