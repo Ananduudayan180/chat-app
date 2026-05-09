@@ -36,6 +36,7 @@ class ChatRepoImpl extends ChatRepo {
       lastMsgTime: message.createdAt,
       lastMsgSenderId: message.senderId,
       visibleFor: participants,
+      isRead: false,
     );
     await _chatService.updateMetaChat(chat, chatId, participants);
     await _messageService.saveMessage(message, chatId);

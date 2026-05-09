@@ -76,6 +76,7 @@ class ChatService {
     try {
       await _firestore.collection('chats').doc(chatId).update({
         'unreadCount': 0,
+        'isRead': true,
       });
     } catch (e) {
       throw Exception('Something weng wrong $e');

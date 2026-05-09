@@ -96,7 +96,9 @@ class ChatTile extends StatelessWidget {
         subtitle: Text(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          chat.lastMsg,
+          chat.lastMsgSenderId == currentUserUid && chat.isRead == true
+              ? 'Seen'
+              : chat.lastMsg,
           style: TextStyle(color: theme.dividerColor),
         ),
         trailing: Column(

@@ -6,6 +6,7 @@ class ChatModel {
   final String? otherUserUid;
   final String lastMsg;
   final int? unreadCount;
+  final bool isRead;
   final Timestamp lastMsgTime;
   final List visibleFor;
 
@@ -15,6 +16,7 @@ class ChatModel {
     required this.lastMsgTime,
     required this.lastMsgSenderId,
     required this.visibleFor,
+    required this.isRead,
     this.unreadCount,
     this.otherUserUid,
   });
@@ -26,6 +28,7 @@ class ChatModel {
       lastMsgSenderId: json['lastMsgSenderId'],
       lastMsg: json['lastMsg'],
       unreadCount: json['unreadCount'],
+      isRead: json['isRead'],
       lastMsgTime: json['lastMsgTime'],
       visibleFor: json['visibleFor'],
     );
@@ -40,6 +43,7 @@ class ChatModel {
       'lastMsg': lastMsg,
       'lastMsgTime': lastMsgTime,
       'unreadCount': FieldValue.increment(1),
+      'isRead': isRead,
     };
   }
 }
