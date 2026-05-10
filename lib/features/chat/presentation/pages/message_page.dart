@@ -29,6 +29,7 @@ class MessagePage extends StatefulWidget {
 
 class _MessagePageState extends State<MessagePage> {
   final _messageController = TextEditingController();
+  bool isSendMessage = false;
 
   @override
   void initState() {
@@ -69,6 +70,7 @@ class _MessagePageState extends State<MessagePage> {
         participants: [currentUserUid, widget.user.uid],
       ),
     );
+    isSendMessage = true;
     _messageController.clear();
   }
 
@@ -91,6 +93,13 @@ class _MessagePageState extends State<MessagePage> {
             isDeleted: widget.isDeleted,
             isBlocked: blockedByCurrentUser || widget.blockedByOtherUser,
             blockedByCurrentUser: blockedByCurrentUser,
+            onPressed: () {
+              if (isSendMessage) {
+                Navigator.popUntil(context, (route) => route.isFirst);
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
           ),
           body: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),

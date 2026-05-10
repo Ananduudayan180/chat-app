@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 class MessageAppbar extends StatelessWidget implements PreferredSizeWidget {
   final AppUserModel user;
   final String currentUserUid;
+  final VoidCallback onPressed;
   final bool blockedByCurrentUser;
   final bool isDeleted;
   final bool isBlocked;
+
   const MessageAppbar({
     super.key,
     required this.user,
@@ -16,15 +18,14 @@ class MessageAppbar extends StatelessWidget implements PreferredSizeWidget {
     required this.isDeleted,
     required this.isBlocked,
     required this.blockedByCurrentUser,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        onPressed: onPressed,
         icon: Icon(Icons.arrow_back_ios, size: 20),
       ),
       title: Row(
