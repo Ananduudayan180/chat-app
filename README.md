@@ -15,6 +15,7 @@ The app uses Firebase and Supabase for authentication, database, and media stora
     </tr>
     <tr>
       <td align="center"><img src="assets/images/screenshots/chat_search.PNG" width="300"/><br><b>Search Users</b></td>
+      <td align="center"><img src="assets/images/screenshots/chat_blocked.PNG" width="300"/><br><b>Blocked List</b></td>
       <td align="center"><img src="assets/images/screenshots/chat_profile.PNG" width="300"/><br><b>Profile Page</b></td>
       <td></td>
     </tr>
